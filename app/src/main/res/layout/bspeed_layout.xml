@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/speedometer" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <ImageView android:id="@id/imageView5" android:background="@drawable/speedo_center" android:layout_width="99.0dip" android:layout_height="70.0dip" android:layout_marginBottom="8.0dip" custom:layout_constraintBottom_toBottomOf="parent" custom:layout_constraintEnd_toEndOf="parent" custom:layout_constraintHorizontal_bias="0.501" custom:layout_constraintStart_toStartOf="parent" />
+
+    <com.samp.mobile.game.ui.SeekArc
+        android:id="@+id/speed_line"
+        android:layout_width="105dp"
+        android:layout_height="68dp"
+        android:background="#00000000"
+        android:padding="@dimen/_4sdp"
+        android:rotation="270.0"
+        android:scaleX="1.08"
+        android:scaleY="1.53"
+        custom:arcColor="#00000000"
+        custom:enabled="false"
+        custom:layout_constraintBottom_toBottomOf="@id/imageView5"
+        custom:layout_constraintEnd_toEndOf="@id/imageView5"
+        custom:layout_constraintStart_toStartOf="@id/imageView5"
+        custom:layout_constraintTop_toTopOf="@id/imageView5"
+        custom:max="370"
+        custom:progress="233"
+        custom:progressColor="#ffff6122"
+        custom:progressWidth="@dimen/_2sdp"
+        custom:sweepAngle="180"
+        custom:touchInside="true" />
+
+    <View
+        android:id="@+id/blinkerr"
+        android:layout_width="99.0dip"
+        android:layout_height="70.0dip"
+        android:layout_marginBottom="8.0dip"
+        android:background="@drawable/speedo_blink"
+        android:visibility="gone"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintEnd_toEndOf="@+id/imageView5"
+        custom:layout_constraintStart_toStartOf="@+id/imageView5" />
+
+    <TextView
+        android:id="@+id/speed_text"
+        android:layout_width="37.0dip"
+        android:layout_height="22.0dip"
+        android:layout_marginTop="17.0dip"
+        android:fontFamily="@font/speed_br"
+        android:gravity="center"
+        android:letterSpacing="-0.03"
+        android:text="001"
+        android:textColor="#ffffffff"
+        android:textSize="15.0dp"
+        custom:layout_constraintEnd_toEndOf="@id/imageView5"
+        custom:layout_constraintStart_toStartOf="@id/imageView5"
+        custom:layout_constraintTop_toTopOf="@id/imageView5" />
+    <ImageView android:id="@+id/imageView10" android:layout_width="18.0dip" android:layout_height="7.0dip" android:layout_marginTop="21.0dip" android:src="@drawable/speedo_h" custom:layout_constraintEnd_toEndOf="@id/imageView5" custom:layout_constraintStart_toStartOf="@id/imageView5" custom:layout_constraintTop_toTopOf="@id/speed_text" />
+    <ImageView android:id="@+id/imageView8" android:background="@drawable/speedo_scale" android:layout_width="89.0dip" android:layout_height="33.0dip" android:layout_marginTop="3.0dip" custom:layout_constraintEnd_toEndOf="@id/imageView5" custom:layout_constraintStart_toStartOf="@id/imageView5" custom:layout_constraintTop_toTopOf="@id/imageView5" />
+
+    <ImageView
+        android:id="@+id/blinker"
+        android:layout_width="11.0dip"
+        android:layout_height="7.0dip"
+        android:layout_marginTop="8.0dip"
+        android:background="@drawable/speedo_blinker"
+        android:visibility="visible"
+        custom:layout_constraintEnd_toEndOf="@id/imageView8"
+        custom:layout_constraintStart_toStartOf="@id/imageView8"
+        custom:layout_constraintTop_toTopOf="@id/imageView8" />
+
+    <TextView
+        android:id="@id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="13.0dip"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/speed_br"
+        android:letterSpacing="0.13"
+        android:text="000000"
+        android:textColor="#66ffffff"
+        android:textSize="8.0sp"
+        custom:layout_constraintBottom_toBottomOf="@id/imageView5"
+        custom:layout_constraintEnd_toEndOf="@id/imageView5"
+        custom:layout_constraintHorizontal_bias="0.519"
+        custom:layout_constraintStart_toStartOf="@id/imageView5" />
+
+    <ImageView android:background="@drawable/speedo_km" android:visibility="visible" android:layout_width="11.0dip" android:layout_height="7.0dip" android:layout_marginBottom="1.0dip" android:layout_marginStart="1.0dip" custom:layout_constraintBottom_toBottomOf="@id/textView2" custom:layout_constraintStart_toEndOf="@id/textView2" custom:layout_constraintTop_toTopOf="@id/textView2" />
+    <LinearLayout android:id="@+id/linearLayout" android:layout_width="24.0dip" android:layout_height="12.0dip" android:layout_marginBottom="11.0dip" custom:layout_constraintBottom_toBottomOf="parent" custom:layout_constraintEnd_toEndOf="parent" custom:layout_constraintStart_toStartOf="parent">
+        <ImageView android:id="@+id/speed_lock_ico" android:layout_width="8.0dip" android:layout_height="fill_parent" android:src="@drawable/speedo_doors" />
+
+        <Space
+            android:layout_width="@dimen/_5sdp"
+            android:layout_height="wrap_content" />
+
+        <ImageView android:id="@+id/speed_engine_ico" android:layout_width="8.5dip" android:layout_height="fill_parent" android:src="@drawable/speedo_engine" />
+    </LinearLayout>
+    <ImageView android:id="@+id/imageView9" android:background="@drawable/speedo_right" android:layout_width="79.0dip" android:layout_height="29.0dip" android:rotation="180.0" android:rotationX="180.0" custom:layout_constraintBottom_toBottomOf="@id/imageView5" custom:layout_constraintEnd_toStartOf="@id/imageView5" custom:layout_constraintTop_toTopOf="@id/imageView5" />
+
+    <ImageView android:id="@+id/imageView11" android:background="@drawable/speedo_fuel" android:layout_width="14.0dip" android:layout_height="15.0dip" android:layout_marginStart="28.0dip" custom:layout_constraintBottom_toBottomOf="@id/imageView9" custom:layout_constraintStart_toStartOf="@id/imageView9" custom:layout_constraintTop_toTopOf="@id/imageView9" />
+    <TextView android:textSize="9.0dip" android:textColor="@color/white" android:id="@+id/speed_fuel_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="3.0dip" android:text="150" android:fontFamily="@font/speed_br" android:letterSpacing="-0.03" custom:layout_constraintEnd_toEndOf="@id/textView" custom:layout_constraintTop_toTopOf="@id/imageView9" />
+    <TextView android:textSize="9.0dip" android:textColor="@color/white" android:id="@id/textView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="2.0dip" android:text="150" android:fontFamily="@font/speed_br" android:layout_marginStart="2.0dip" custom:layout_constraintBottom_toBottomOf="@id/imageView9" custom:layout_constraintStart_toEndOf="@id/imageView11" />
+
+    <ImageView android:id="@+id/imageView12" android:background="@drawable/speedo_right" android:layout_width="79.0dip" android:layout_height="29.0dip" android:layout_marginStart="1.0dip" custom:layout_constraintBottom_toBottomOf="@id/imageView5" custom:layout_constraintStart_toEndOf="@id/imageView5" custom:layout_constraintTop_toTopOf="@id/imageView5" />
+    <ImageView android:id="@+id/imageView13" android:layout_width="17.0dip" android:layout_height="15.0dip" android:src="@drawable/speedo_health" android:layout_marginStart="8.0dip" custom:layout_constraintBottom_toBottomOf="@id/imageView12" custom:layout_constraintStart_toStartOf="@id/imageView12" custom:layout_constraintTop_toTopOf="@id/imageView12" />
+    <TextView android:textSize="7.0dip" android:textColor="@color/white" android:id="@+id/speed_car_hp_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="1.0dip" android:text="100%" android:fontFamily="@font/speed_br" android:layout_marginStart="1.0dip" android:letterSpacing="0.01" custom:layout_constraintBottom_toBottomOf="@id/imageView13" custom:layout_constraintStart_toEndOf="@id/imageView13" custom:layout_constraintTop_toTopOf="@id/imageView13" />
+    <ImageView android:id="@+id/imageView52" android:background="#5bffffff" android:layout_width="0.0dip" android:layout_height="1.0dip" custom:layout_constraintBottom_toBottomOf="@id/textView" custom:layout_constraintEnd_toEndOf="@id/textView" custom:layout_constraintStart_toStartOf="@id/textView" custom:layout_constraintTop_toTopOf="@id/speed_fuel_text" custom:layout_constraintVertical_bias="0.49" />
+
+    <ImageView
+        android:id="@+id/right_nactive"
+        android:layout_width="79.0dip"
+        android:layout_height="28.0dip"
+        android:layout_marginTop="1.0dip"
+        android:visibility="visible"
+        custom:layout_constraintBottom_toBottomOf="@id/imageView12"
+        custom:layout_constraintStart_toEndOf="@id/imageView12"
+        custom:layout_constraintTop_toTopOf="@id/imageView12" />
+
+    <ImageView
+        android:id="@+id/left_nactive"
+        android:layout_width="79.0dip"
+        android:layout_height="28.0dip"
+        android:layout_marginTop="1.0dip"
+        android:rotationY="-180.0"
+        android:visibility="visible"
+        custom:layout_constraintBottom_toBottomOf="@id/imageView9"
+        custom:layout_constraintEnd_toStartOf="@id/imageView9"
+        custom:layout_constraintTop_toTopOf="@id/imageView9" />
+
+    <TextView android:textSize="9.0dip" android:textColor="#ffffffff" android:id="@+id/textView51" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="L" android:fontFamily="@font/speed_br" android:layout_marginStart="2.0dip" custom:layout_constraintBottom_toBottomOf="@id/textView" custom:layout_constraintStart_toEndOf="@id/imageView52" custom:layout_constraintTop_toTopOf="@id/speed_fuel_text" />
+
+    <TextView
+        android:id="@+id/speed_fuel_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2.0dip"
+        android:fontFamily="@font/speed_br"
+        android:textColor="#66ffffff"
+        android:textSize="8.5dip"
+        android:visibility="visible"
+        custom:layout_constraintBottom_toTopOf="@id/imageView52"
+        custom:layout_constraintEnd_toStartOf="@id/speed_fuel_text"
+        custom:layout_constraintTop_toTopOf="@id/speed_fuel_text" />
+</androidx.constraintlayout.widget.ConstraintLayout>
