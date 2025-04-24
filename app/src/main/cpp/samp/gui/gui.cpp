@@ -321,7 +321,7 @@ void UI::DrawServerTexture() {
 
     // загружаем и рисуем текстуру
     CSprite2d* server = new CSprite2d();
-    server->m_pRwTexture = (RwTexture*)CUtil::LoadTextureFromDB("samp", "kuzia"); // в samp с названием dslogo
+    server->m_pRwTexture = (RwTexture*)CUtil::LoadTextureFromDB("samp", "xz"); // в samp с названием dslogo
 
     CRGBA color {255, 255, 255, 255};
 

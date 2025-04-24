@@ -11,7 +11,6 @@ endif()
 
 message(WARNING "-------------------------------------------------")
 message(WARNING "")
-message(WARNING "Author: github.com/kuzia15")
 message(WARNING "Current: libsamp.so [${ANDROID_ABI}]")
 message(WARNING "")
 message(WARNING "-------------------------------------------------")
