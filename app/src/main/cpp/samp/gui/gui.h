@@ -92,14 +92,15 @@ public:
 
 	virtual void touchEvent(const ImVec2& pos, TouchType type) override;
 
-	bool OnTouchEvent(int type, bool multi, int x, int y);
+    [[maybe_unused]] bool OnTouchEvent(int type, bool multi, int x, int y);
 
     void renderDebug();
 
     void DrawServerTexture();
 
     void ProcessPushedTextdraws();
-    void PushToBufferedQueueTextDrawPressed(uint16_t textdrawId);
+
+    [[maybe_unused]] void PushToBufferedQueueTextDrawPressed(uint16_t textdrawId);
 
 protected:
 	void drawList() override;

@@ -180,7 +180,7 @@ enum eTouchType
     TOUCH_MOVE = 3
 };
 
-bool UI::OnTouchEvent(int type, bool multi, int x, int y)
+[[maybe_unused]] bool UI::OnTouchEvent(int type, bool multi, int x, int y)
 {
     ImGuiIO& io = ImGui::GetIO();
 
@@ -285,7 +285,7 @@ void UI::renderDebug()
     label4->setPosition(pos);
 }
 
-void UI::PushToBufferedQueueTextDrawPressed(uint16_t textdrawId)
+[[maybe_unused]] void UI::PushToBufferedQueueTextDrawPressed(uint16_t textdrawId)
 {
     BUFFERED_COMMAND_TEXTDRAW* pCmd = m_BufferedCommandTextdraws.WriteLock();
 
@@ -307,7 +307,7 @@ void UI::ProcessPushedTextdraws()
 }
 
 #include "..//game/sprite2d.h"
-void UI::DrawServerTexture() {
+[[maybe_unused]] void UI::DrawServerTexture() {
     // получаем размеры экрана
     ImGuiIO& io = ImGui::GetIO();
     float displayWidth = io.DisplaySize.x;
