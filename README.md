@@ -2,4 +2,4 @@
 A SA:MP mobile client on 64bit.
 its samp-laucher fork.
 
-![image](https://imgur.com/a/QgpC8K6)
+![image](https://i.imgur.com/3ME7V6V.jpeg)
