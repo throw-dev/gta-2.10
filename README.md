@@ -1,5 +1,4 @@
-# SA-MP-2.10
-A SA:MP mobile client on 64bit.
-its samp-laucher fork.
+# SA:MP Mobile
+A samp client gta 2.1 based.
 
 ![image](https://i.imgur.com/3ME7V6V.jpeg)
