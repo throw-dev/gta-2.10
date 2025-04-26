@@ -11,6 +11,7 @@ import com.joom.paranoid.Obfuscate;
 import com.samp.mobile.game.ui.AttachEdit;
 import com.samp.mobile.game.ui.CustomKeyboard;
 import com.samp.mobile.game.ui.LoadingScreen;
+import com.samp.mobile.game.ui.Speedometer;
 import com.samp.mobile.game.ui.dialog.DialogManager;
 import com.samp.mobile.launcher.util.SharedPreferenceCore;
 import com.samp.mobile.launcher.util.SignatureChecker;
@@ -25,6 +26,7 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
     private CustomKeyboard mKeyboard;
     private DialogManager mDialog;
     private HeightProvider mHeightProvider;
+    private Speedometer mSpeedometer;
 
     private AttachEdit mAttachEdit;
     private LoadingScreen mLoadingScreen;

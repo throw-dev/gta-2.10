@@ -126,6 +126,9 @@ void ApplySAMPPatchesInGame()
     CHook::NOP(g_libGTASA + (VER_x32 ? 0x2ABA08 : 0x36A6E8), 2); // текст легенды карты
     CHook::NOP(g_libGTASA + (VER_x32 ? 0x2ABA14 : 0x36A6F8), 2); // значки легенды
     CHook::NOP(g_libGTASA + (VER_x32 ? 0x2AB4A6 : 0x36A190), 2); // название местности
+
+    const char* newLightingColorString = "Out_LightingColor = AmbientLightColor * 3.0 * MaterialAmbient.xyz";
+    CHook::WriteMemory(g_libGTASA + (VER_x32 ? 0x2AB4A6 : 0x36A190), (uintptr_t)newLightingColorString, strlen(newLightingColorString));
 }
 
 int32_t CWorld__FindPlayerSlotWithPedPointer(CPedGTA* pPlayersPed)

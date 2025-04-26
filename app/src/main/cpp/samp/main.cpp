@@ -321,7 +321,7 @@ extern "C" {
 		pEnv->ReleaseByteArrayElements(str, pMsg, JNI_ABORT);
 	}
 }
-
+#include "CSkyBox.h"
 void MainLoop()
 {
 	if (pGame->bIsGameExiting) return;
@@ -339,7 +339,7 @@ void MainLoop()
 	if (pAudioStream) {
 		pAudioStream->Process();
 	}
-
+    CSkyBox::Process();
 }
 
 void InitGui()
