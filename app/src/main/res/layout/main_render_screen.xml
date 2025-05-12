@@ -20,6 +20,7 @@
         <View android:id="@+id/dark_screen" android:background="#ff000000" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="fill_parent" android:alpha="0.0" />
         <include layout="@layout/bspeed_layout"/>
 
+
     </FrameLayout>
 
 </FrameLayout>

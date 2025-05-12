@@ -1919,7 +1919,7 @@ void InstallHooks()
     CHook::InlineHook("_ZN7CObject6RenderEv", &CObject_Render_hook, & CObject_Render);
 
 
-    CHook::InlineHook(g_libGTASA + (VER_x32 ? 0x0029ada9:0x00357130), &MobileMenu_InitForPause_hook, &MobileMenu_InitForPause);
+    //CHook::InlineHook(g_libGTASA + (VER_x32 ? 0x0029ada9:0x00357130), &MobileMenu_InitForPause_hook, &MobileMenu_InitForPause);
 
     CHook::Redirect("_Z19PlayerIsEnteringCarv", &PlayerIsEnteringCar);
     if(*(uint8_t *)(g_libGTASA + (VER_x32 ? 0x6B8B9C:0x896135)))
