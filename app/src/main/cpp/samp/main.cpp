@@ -339,7 +339,7 @@ void MainLoop()
 	if (pAudioStream) {
 		pAudioStream->Process();
 	}
-    CSkyBox::Process();
+    //CSkyBox::Process();
 }
 
 void InitGui()
