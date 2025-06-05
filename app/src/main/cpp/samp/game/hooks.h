@@ -12,10 +12,4 @@ class CHooks {
 public:
 
 
-
-private:
-    static CObject* CreateObjectScaled(int iModel, float fScale);
-
-private:
-    void InitialiseSkyBoxxx();
 };

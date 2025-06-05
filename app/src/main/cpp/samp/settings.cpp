@@ -91,7 +91,6 @@ CSettings::CSettings()
 	m_Settings.iOutfitGuns = reader.GetBoolean("gui", "outfitguns", false);
 	m_Settings.iPCMoney = reader.GetBoolean("gui", "pcmoney", false);
 	m_Settings.iRadarRect = reader.GetBoolean("gui", "radarrect", false);
-	m_Settings.iSkyBox = reader.GetBoolean("gui", "skybox", false);
 	m_Settings.iSnow = reader.GetBoolean("gui", "snow", false);
     m_Settings.iHud = reader.GetBoolean("gui", "hud", false);
 	FLog("Settings loaded.");

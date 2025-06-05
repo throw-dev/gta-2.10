@@ -50,7 +50,6 @@ struct stSettings
 	bool iOutfitGuns;
 	bool iPCMoney;
 	bool iRadarRect;
-	bool iSkyBox;
 	bool iSnow;
 	bool iFirstPerson;
     bool iHud;

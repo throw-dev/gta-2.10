@@ -31,6 +31,7 @@
 #include "Core/Matrix.h"
 #include "Skybox.h"
 
+
 extern UI* pUI;
 extern CGame* pGame;
 extern CNetGame *pNetGame;
@@ -283,11 +284,7 @@ void (*CEntity_Render)(CEntityGTA* pEntity);
 int g_iLastRenderedObject;
 void CEntity_Render_hook(CEntityGTA* pEntity)
 {
-    if (Skybox::GetSkyObject()) {
-        if (Skybox::GetSkyObject()->m_pEntity == pEntity && !Skybox::IsNeedRender()) {
-            return;
-        }
-    }
+
     if(iBuildingToRemoveCount > 1)
     {
         if(pEntity && *(uintptr_t*)pEntity != g_libGTASA+(VER_x32 ? 0x667D18:0x8300A0) && !pNetGame->GetObjectPool()->GetObjectFromGtaPtr(pEntity))
@@ -312,11 +309,23 @@ void CEntity_Render_hook(CEntityGTA* pEntity)
 }
 
 /* =============================================================================== */
+void (*CRenderer__RenderEverythingBarRoads)();
+void CRenderer__RenderEverythingBarRoads_hook() {
+    if(pNetGame) {
+        Skybox::Process();
+    }
 
+    CRenderer__RenderEverythingBarRoads();
+}
 /* =============================================================================== */
 void (*CObject_Render)(CObjectGta* thiz);
 void CObject_Render_hook(CObjectGta* thiz)
 {
+    if (Skybox::GetSkyObject())
+    {
+        if (Skybox::GetSkyObject()->m_pEntity == thiz && !Skybox::IsNeedRender())
+            return;
+    }
     CObjectGta *object = thiz;
     if(pNetGame && object != 0)
     {
@@ -863,15 +872,6 @@ bool ComputeDamageResponse(CPedDamageResponseCalculator* calculator, CPedGTA* pP
     }
 
     return true;
-}
-
-void (*CRenderer__RenderEverythingBarRoads)();
-void CRenderer__RenderEverythingBarRoads_hook() {
-    if(pNetGame) {
-        //Skybox::Process();
-    }
-
-    CRenderer__RenderEverythingBarRoads();
 }
 
 // 0.3.7
@@ -1916,7 +1916,7 @@ void InstallHooks()
 
     //CHook::InlineHook("_ZN11CFileLoader18LoadObjectInstanceEPKc", &CFileLoader__LoadObjectInstance_hook, &CFileLoader__LoadObjectInstance);
     CHook::InlineHook("_ZN6CRadar9ClearBlipEi", &CRadar_ClearBlip_hook, &CRadar_ClearBlip);
-
+    CHook::InlineHook("_ZN9CRenderer24RenderEverythingBarRoadsEv", &CRenderer__RenderEverythingBarRoads_hook, &CRenderer__RenderEverythingBarRoads);
     CHook::InlineHook("_ZN10CCollision19ProcessVerticalLineERK8CColLineRK7CMatrixR9CColModelR9CColPointRfbbP15CStoredCollPoly", &CCollision__ProcessVerticalLine_hook, &CCollision__ProcessVerticalLine);
 
     CHook::InlineHook("_ZN19CUpsideDownCarCheck15IsCarUpsideDownEPK8CVehicle", &CUpsideDownCarCheck__IsCarUpsideDown_hook, &CUpsideDownCarCheck__IsCarUpsideDown);
@@ -1954,8 +1954,6 @@ void InstallHooks()
 
     CHook::InlineHook("_ZN13FxEmitterBP_c6RenderEP8RwCamerajfh", &FxEmitterBP_c__Render_hook, &FxEmitterBP_c__Render);
     CHook::InlineHook("_Z23RwResourcesFreeResEntryP10RwResEntry", &RwResourcesFreeResEntry_hook, &RwResourcesFreeResEntry);
-
-    CHook::InlineHook("_ZN9CRenderer24RenderEverythingBarRoadsEv", &CRenderer__RenderEverythingBarRoads_hook, &CRenderer__RenderEverythingBarRoads);
 
     //CHook::InlineHook("_ZN9CRenderer24RenderEverythingBarRoadsEv", &CRenderer_RenderEverythingBarRoads_hook, &CRenderer_RenderEverythingBarRoads);
 //
