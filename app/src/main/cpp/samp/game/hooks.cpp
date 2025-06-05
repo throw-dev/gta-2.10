@@ -29,6 +29,7 @@
 #include "CrossHair.h"
 #include "World.h"
 #include "Core/Matrix.h"
+#include "Skybox.h"
 
 extern UI* pUI;
 extern CGame* pGame;
@@ -144,15 +145,12 @@ void Render2dStuff_hook()
 }*/
 void Render2dStuff()
 {
-    if (pSettings && pSettings->Get().iHud)
-    {
-        *(uint8_t*)(g_libGTASA + (VER_x32 ? 0x00819D88 + 1 : 0x009ff3A8)) = 1;
+    if(VER_x32) {
+        *(uint8_t*)(g_libGTASA+0x819D88) = 0;
+    } else {
+        *(uint8_t*)(g_libGTASA+0x9FF3A8) = 0;
     }
-    else if (pSettings && !pSettings->Get().iHud)
-    {
-        *(uint8_t*)(g_libGTASA + (VER_x32 ? 0x00819D88 + 1 : 0x009ff3A8)) = 0;
-    }
-
+    CHook::CallFunction<void>("_ZN15CTouchInterface7DrawAllEb", false);
     if( CHook::CallFunction<bool>(g_libGTASA + (VER_x32 ? 0x001BB7F4 + 1 : 0x24EA90)) ) // emu_IsAltRenderTarget()
         CHook::CallFunction<void>(g_libGTASA + (VER_x32 ? 0x001BC20C + 1 : 0x24F5B8)); // emu_FlushAltRenderTarget()
 
@@ -169,7 +167,7 @@ void Render2dStuff()
     CHook::CallFunction<void>("_ZN4CHud4DrawEv");
     //	GPS::Draw();
     //
-    ((void(*)(bool) )(g_libGTASA + (VER_x32 ? 0x002B0BD8 + 1 : 0x36FB00)) )(false); // CTouchInterface::DrawAll
+
 
     CHook::CallFunction<void>("_Z12emu_GammaSeth", 1);
 
@@ -285,6 +283,11 @@ void (*CEntity_Render)(CEntityGTA* pEntity);
 int g_iLastRenderedObject;
 void CEntity_Render_hook(CEntityGTA* pEntity)
 {
+    if (Skybox::GetSkyObject()) {
+        if (Skybox::GetSkyObject()->m_pEntity == pEntity && !Skybox::IsNeedRender()) {
+            return;
+        }
+    }
     if(iBuildingToRemoveCount > 1)
     {
         if(pEntity && *(uintptr_t*)pEntity != g_libGTASA+(VER_x32 ? 0x667D18:0x8300A0) && !pNetGame->GetObjectPool()->GetObjectFromGtaPtr(pEntity))
@@ -315,11 +318,6 @@ void (*CObject_Render)(CObjectGta* thiz);
 void CObject_Render_hook(CObjectGta* thiz)
 {
     CObjectGta *object = thiz;
-   // if (GetSkyObject())
-    //{
-       // if (GetSkyObject()->m_pEntity == thiz && !IsNeedRender())
-         //   return;
-    //}
     if(pNetGame && object != 0)
     {
         CObject *pObject = pNetGame->GetObjectPool()->FindObjectFromGtaPtr(object);
@@ -865,6 +863,15 @@ bool ComputeDamageResponse(CPedDamageResponseCalculator* calculator, CPedGTA* pP
     }
 
     return true;
+}
+
+void (*CRenderer__RenderEverythingBarRoads)();
+void CRenderer__RenderEverythingBarRoads_hook() {
+    if(pNetGame) {
+        //Skybox::Process();
+    }
+
+    CRenderer__RenderEverythingBarRoads();
 }
 
 // 0.3.7
@@ -1908,7 +1915,6 @@ void InstallHooks()
     CHook::InlineHook("_ZN11CBulletInfo9AddBulletEP7CEntity11eWeaponType7CVectorS3_", &CBulletInfo_AddBullet_hook, &CBulletInfo_AddBullet);
 
     //CHook::InlineHook("_ZN11CFileLoader18LoadObjectInstanceEPKc", &CFileLoader__LoadObjectInstance_hook, &CFileLoader__LoadObjectInstance);
-
     CHook::InlineHook("_ZN6CRadar9ClearBlipEi", &CRadar_ClearBlip_hook, &CRadar_ClearBlip);
 
     CHook::InlineHook("_ZN10CCollision19ProcessVerticalLineERK8CColLineRK7CMatrixR9CColModelR9CColPointRfbbP15CStoredCollPoly", &CCollision__ProcessVerticalLine_hook, &CCollision__ProcessVerticalLine);
@@ -1949,7 +1955,16 @@ void InstallHooks()
     CHook::InlineHook("_ZN13FxEmitterBP_c6RenderEP8RwCamerajfh", &FxEmitterBP_c__Render_hook, &FxEmitterBP_c__Render);
     CHook::InlineHook("_Z23RwResourcesFreeResEntryP10RwResEntry", &RwResourcesFreeResEntry_hook, &RwResourcesFreeResEntry);
 
+    CHook::InlineHook("_ZN9CRenderer24RenderEverythingBarRoadsEv", &CRenderer__RenderEverythingBarRoads_hook, &CRenderer__RenderEverythingBarRoads);
+
     //CHook::InlineHook("_ZN9CRenderer24RenderEverythingBarRoadsEv", &CRenderer_RenderEverythingBarRoads_hook, &CRenderer_RenderEverythingBarRoads);
+//
+//
+//
+//
+//
+//
+//
 
     ms_fAspectRatio = (float*)(g_libGTASA+(VER_x32 ? 0xA26A90:0xCC7F00));
     CHook::InlineHook("_ZN4CHud14DrawCrossHairsEv", &DrawCrosshair_hook, &DrawCrosshair);

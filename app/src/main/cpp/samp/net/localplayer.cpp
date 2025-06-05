@@ -583,13 +583,14 @@ void CLocalPlayer::ProcessSpectating()
 		}
 	}
 }
-
+#include "java/jniutil.h"
+extern CJavaWrapper* pJavaWrapper;
 bool CLocalPlayer::Spawn()
 {
 	if (!m_bHasSpawnInfo) {
 		return false;
 	}
-
+    pJavaWrapper->ShowHud();
 	// voice
 	SpeakerList::Show();
 	MicroIcon::Show();

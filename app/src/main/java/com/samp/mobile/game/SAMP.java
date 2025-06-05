@@ -13,6 +13,7 @@ import com.samp.mobile.game.ui.CustomKeyboard;
 import com.samp.mobile.game.ui.LoadingScreen;
 import com.samp.mobile.game.ui.Speedometer;
 import com.samp.mobile.game.ui.dialog.DialogManager;
+import com.samp.mobile.game.ui.hud.HudManager;
 import com.samp.mobile.launcher.util.SharedPreferenceCore;
 import com.samp.mobile.launcher.util.SignatureChecker;
 
@@ -27,6 +28,7 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
     private DialogManager mDialog;
     private HeightProvider mHeightProvider;
     private Speedometer mSpeedometer;
+    private HudManager mHudManager;
 
     private AttachEdit mAttachEdit;
     private LoadingScreen mLoadingScreen;
@@ -103,6 +105,13 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
         final String leftBtnText = new String(bArr3, StandardCharsets.UTF_8);
         final String rightBtnText = new String(bArr4, StandardCharsets.UTF_8);
         runOnUiThread(() -> { this.mDialog.show(dialogId, dialogTypeId, caption, content, leftBtnText, rightBtnText); });
+    }
+
+    public void showHud() {
+        runOnUiThread(() -> { this.mHudManager.ShowHud(); });
+    }
+    public void updateHudInfo(int health, int armour, int hunger, int weaponidweik, int ammo, int playerid, int money, int wanted) {
+        runOnUiThread(() -> { this.mHudManager.UpdateHudInfo(health, armour, hunger, weaponidweik, ammo, playerid, money, wanted); });
     }
 
     private native void onInputEnd(byte[] str);
@@ -184,6 +193,7 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
         mKeyboard = new CustomKeyboard(this);
 
         mDialog = new DialogManager(this);
+        mHudManager = new HudManager(this);
 
         mAttachEdit = new AttachEdit(this);
 
