@@ -5,5 +5,5 @@ pluginManagement {
         mavenCentral()
     }
 }
-rootProject.name = "SA-MP Launcher"
+rootProject.name = "Throw Mobile"
 include ':app'

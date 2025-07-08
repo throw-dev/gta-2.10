@@ -16,6 +16,7 @@
 #include "game/Streaming.h"
 #include "game/Pools.h"
 
+
 extern CNetGame* pNetGame;
 extern CPlayerTags* pPlayerTags;
 extern UI* pUI;
@@ -97,7 +98,7 @@ bool UI::initialize()
     // mem
     Label* d_label1;
 
-    d_label1 = new Label(cryptor::create("SA:MP Mobile 2.10").decrypt(), ImColor(1.0f, 1.0f, 1.0f), true, UISettings::fontSize() / 3);
+    d_label1 = new Label(cryptor::create("Throw Mobile 2.1").decrypt(), ImColor(1.0f, 1.0f, 1.0f), true, UISettings::fontSize() / 3);
     this->addChild(d_label1);
     d_label1->setPosition(ImVec2(3.0, 3.0));
 
@@ -116,6 +117,7 @@ void UI::render()
 
     renderDebug();
 
+
     ProcessPushedTextdraws();
 
     if (m_bNeedClearMousePos) {
@@ -123,6 +125,8 @@ void UI::render()
         io.MousePos = ImVec2(-1, -1);
         m_bNeedClearMousePos = false;
     }
+
+
 
    //DrawServerTexture(); // render sprite
 }
@@ -321,7 +325,7 @@ void UI::DrawServerTexture() {
 
     // загружаем и рисуем текстуру
     CSprite2d* server = new CSprite2d();
-    server->m_pRwTexture = (RwTexture*)CUtil::LoadTextureFromDB("samp", "kuzia"); // в samp с названием dslogo
+    server->m_pRwTexture = (RwTexture*)CUtil::LoadTextureFromDB("samp", "xz"); // в samp с названием dslogo
 
     CRGBA color {255, 255, 255, 255};
 

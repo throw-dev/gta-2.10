@@ -14,61 +14,61 @@ extern CGame* pGame;
 void readVehiclesAudioSettings()
 {
 
-	char vehicleModel[50];
-	int16_t pIndex = 0;
+    char vehicleModel[50];
+    int16_t pIndex = 0;
 
-	FILE* pFile;
+    FILE* pFile;
 
-	char line[300];
+    char line[300];
 
-	// Zero VehicleAudioProperties
-	memset(VehicleAudioProperties, 0x00, sizeof(VehicleAudioProperties));
+    // Zero VehicleAudioProperties
+    memset(VehicleAudioProperties, 0x00, sizeof(VehicleAudioProperties));
 
-	VehicleAudioPropertiesStruct CurrentVehicleAudioProperties;
+    VehicleAudioPropertiesStruct CurrentVehicleAudioProperties;
 
-	memset(&CurrentVehicleAudioProperties, 0x0, sizeof(VehicleAudioPropertiesStruct));
+    memset(&CurrentVehicleAudioProperties, 0x0, sizeof(VehicleAudioPropertiesStruct));
 
-	char buffer[0xFF];
-	sprintf(buffer, "%sSAMP/vehicleAudioSettings.cfg", g_pszStorage);
-	pFile = fopen(buffer, "r");
-	if (!pFile)
-	{
-		//Log("Cannot read vehicleAudioSettings.cfg");
-		return;
-	}
+    char buffer[0xFF];
+    sprintf(buffer, "%sSAMP/vehicleAudioSettings.cfg", g_pszStorage);
+    pFile = fopen(buffer, "r");
+    if (!pFile)
+    {
+        //Log("Cannot read vehicleAudioSettings.cfg");
+        return;
+    }
 
-	// File exists
-	while (fgets(line, sizeof(line), pFile))
-	{
-		if (strncmp(line, ";the end", 8) == 0)
-			break;
+    // File exists
+    while (fgets(line, sizeof(line), pFile))
+    {
+        if (strncmp(line, ";the end", 8) == 0)
+            break;
 
-		if (line[0] == ';')
-			continue;
+        if (line[0] == ';')
+            continue;
 
-		sscanf(line, "%s %d %d %d %d %f %f %d %f %d %d %d %d %f",
-			   vehicleModel,
-			   &CurrentVehicleAudioProperties.VehicleType,
-			   &CurrentVehicleAudioProperties.EngineOnSound,
-			   &CurrentVehicleAudioProperties.EngineOffSound,
-			   &CurrentVehicleAudioProperties.field_4,
-			   &CurrentVehicleAudioProperties.field_5,
-			   &CurrentVehicleAudioProperties.field_6,
-			   &CurrentVehicleAudioProperties.HornTon,
-			   &CurrentVehicleAudioProperties.HornHigh,
-			   &CurrentVehicleAudioProperties.DoorSound,
-			   &CurrentVehicleAudioProperties.RadioNum,
-			   &CurrentVehicleAudioProperties.RadioType,
-			   &CurrentVehicleAudioProperties.field_14,
-			   &CurrentVehicleAudioProperties.field_16);
+        sscanf(line, "%s %d %d %d %d %f %f %d %f %d %d %d %d %f",
+               vehicleModel,
+               &CurrentVehicleAudioProperties.VehicleType,
+               &CurrentVehicleAudioProperties.EngineOnSound,
+               &CurrentVehicleAudioProperties.EngineOffSound,
+               &CurrentVehicleAudioProperties.field_4,
+               &CurrentVehicleAudioProperties.field_5,
+               &CurrentVehicleAudioProperties.field_6,
+               &CurrentVehicleAudioProperties.HornTon,
+               &CurrentVehicleAudioProperties.HornHigh,
+               &CurrentVehicleAudioProperties.DoorSound,
+               &CurrentVehicleAudioProperties.RadioNum,
+               &CurrentVehicleAudioProperties.RadioType,
+               &CurrentVehicleAudioProperties.field_14,
+               &CurrentVehicleAudioProperties.field_16);
 
-		((void (*)(const char* thiz, int16_t* a2))(g_libGTASA + 0x385E38 + 1))(vehicleModel, &pIndex);
-		memcpy(&VehicleAudioProperties[pIndex-400], &CurrentVehicleAudioProperties, sizeof(VehicleAudioPropertiesStruct));
+        ((void (*)(const char* thiz, int16_t* a2))(g_libGTASA + 0x385E38 + 1))(vehicleModel, &pIndex);
+        memcpy(&VehicleAudioProperties[pIndex-400], &CurrentVehicleAudioProperties, sizeof(VehicleAudioPropertiesStruct));
 
 
-	}
+    }
 
-	fclose(pFile);
+    fclose(pFile);
 }
 
 void ApplyFPSPatch(uint8_t fps)
@@ -169,7 +169,7 @@ void ApplyPatches_level0()
 
     // entryexit
     //CHook::RET("_ZN17CEntryExitManager4InitEv");
-   // CHook::RET("_ZN17CEntryExitManager22PostEntryExitsCreationEv");
+    // CHook::RET("_ZN17CEntryExitManager22PostEntryExitsCreationEv");
 
     CHook::RET("_ZN10CSkidmarks6UpdateEv"); // CSkidmarks::Update
     CHook::RET("_ZN10CSkidmarks6RenderEv"); // CSkidmarks::Render
@@ -325,16 +325,16 @@ void ApplyGlobalPatches()
     CHook::RET("_ZN22CRealTimeShadowManager6UpdateEv"); // CRealTimeShadowManager::Update
 
     CHook::RET("_ZN22CRealTimeShadowManager20ReturnRealTimeShadowEP15CRealTimeShadow"); // CRealTimeShadowManager::ReturnRealTimeShadow from ~CPhysical
-	CHook::RET("_ZN8CShadows19RenderStaticShadowsEb"); // CShadows::RenderStaticShadows
-	CHook::RET("_ZN8CMirrors16BeforeMainRenderEv"); // CMirrors::BeforeMainRender(void)
-   // CHook::RET("_ZN8CMirrors17RenderReflectionsEv");
+    CHook::RET("_ZN8CShadows19RenderStaticShadowsEb"); // CShadows::RenderStaticShadows
+    CHook::RET("_ZN8CMirrors16BeforeMainRenderEv"); // CMirrors::BeforeMainRender(void)
+    // CHook::RET("_ZN8CMirrors17RenderReflectionsEv");
 
     CHook::RET("_ZN8CCarCtrl18GenerateRandomCarsEv");
 }
 
 void InstallVehicleEngineLightPatches()
 {
-	// типо фикс задних фар
-	CHook::WriteMemory(g_libGTASA + 0x591272, (uintptr_t)"\x02", 1);
-	CHook::WriteMemory(g_libGTASA + 0x59128E, (uintptr_t)"\x02", 1);
+    // типо фикс задних фар
+    CHook::WriteMemory(g_libGTASA + 0x591272, (uintptr_t)"\x02", 1);
+    CHook::WriteMemory(g_libGTASA + 0x59128E, (uintptr_t)"\x02", 1);
 }

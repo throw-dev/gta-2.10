@@ -29,6 +29,8 @@
 #include "CrossHair.h"
 #include "World.h"
 #include "Core/Matrix.h"
+#include "Skybox.h"
+
 
 extern UI* pUI;
 extern CGame* pGame;
@@ -144,15 +146,12 @@ void Render2dStuff_hook()
 }*/
 void Render2dStuff()
 {
-    if (pSettings && pSettings->Get().iHud)
-    {
-        *(uint8_t*)(g_libGTASA + (VER_x32 ? 0x00819D88 + 1 : 0x009ff3A8)) = 1;
+    if(VER_x32) {
+        *(uint8_t*)(g_libGTASA+0x819D88) = 0;
+    } else {
+        *(uint8_t*)(g_libGTASA+0x9FF3A8) = 0;
     }
-    else if (pSettings && !pSettings->Get().iHud)
-    {
-        *(uint8_t*)(g_libGTASA + (VER_x32 ? 0x00819D88 + 1 : 0x009ff3A8)) = 0;
-    }
-
+    CHook::CallFunction<void>("_ZN15CTouchInterface7DrawAllEb", false);
     if( CHook::CallFunction<bool>(g_libGTASA + (VER_x32 ? 0x001BB7F4 + 1 : 0x24EA90)) ) // emu_IsAltRenderTarget()
         CHook::CallFunction<void>(g_libGTASA + (VER_x32 ? 0x001BC20C + 1 : 0x24F5B8)); // emu_FlushAltRenderTarget()
 
@@ -169,7 +168,7 @@ void Render2dStuff()
     CHook::CallFunction<void>("_ZN4CHud4DrawEv");
     //	GPS::Draw();
     //
-    ((void(*)(bool) )(g_libGTASA + (VER_x32 ? 0x002B0BD8 + 1 : 0x36FB00)) )(false); // CTouchInterface::DrawAll
+
 
     CHook::CallFunction<void>("_Z12emu_GammaSeth", 1);
 
@@ -187,6 +186,18 @@ void Render2dStuff()
 }
 
 /* =============================================================================== */
+
+extern CJavaWrapper *pJavaWrapper;
+void (*MobileMenu_InitForPause)(uintptr_t* thiz);
+void MobileMenu_InitForPause_hook(uintptr_t* thiz)
+{
+    //а здесь пишем что выполнить вместо инициализации паузы
+    //например g_pJavaWrapper->ShowPause();
+
+    pUI->chat()->addDebugMessage("это как бы система паузы");
+}
+
+
 
 int (*CRadar__SetCoordBlip)(int r0, float X, float Y, float Z, int r4, int r5, char* name);
 int CRadar__SetCoordBlip_hook(int r0, float X, float Y, float Z, int r4, int r5, char* name)
@@ -273,6 +284,7 @@ void (*CEntity_Render)(CEntityGTA* pEntity);
 int g_iLastRenderedObject;
 void CEntity_Render_hook(CEntityGTA* pEntity)
 {
+
     if(iBuildingToRemoveCount > 1)
     {
         if(pEntity && *(uintptr_t*)pEntity != g_libGTASA+(VER_x32 ? 0x667D18:0x8300A0) && !pNetGame->GetObjectPool()->GetObjectFromGtaPtr(pEntity))
@@ -297,30 +309,24 @@ void CEntity_Render_hook(CEntityGTA* pEntity)
 }
 
 /* =============================================================================== */
+void (*CRenderer__RenderEverythingBarRoads)();
+void CRenderer__RenderEverythingBarRoads_hook() {
+    if(pNetGame) {
+        Skybox::Process();
+    }
 
+    CRenderer__RenderEverythingBarRoads();
+}
 /* =============================================================================== */
-bool m_bNeedRender = true;
-CObject* m_pSkyObject = nullptr;
-
-bool IsNeedRender()
-{
-    return m_bNeedRender;
-}
-
-CObject *GetSkyObject()
-{
-    return m_pSkyObject;
-}
-
 void (*CObject_Render)(CObjectGta* thiz);
 void CObject_Render_hook(CObjectGta* thiz)
 {
+    if (Skybox::GetSkyObject())
+    {
+        if (Skybox::GetSkyObject()->m_pEntity == thiz && !Skybox::IsNeedRender())
+            return;
+    }
     CObjectGta *object = thiz;
-   // if (GetSkyObject())
-    //{
-       // if (GetSkyObject()->m_pEntity == thiz && !IsNeedRender())
-         //   return;
-    //}
     if(pNetGame && object != 0)
     {
         CObject *pObject = pNetGame->GetObjectPool()->FindObjectFromGtaPtr(object);
@@ -1750,8 +1756,6 @@ void SetUpGLHooks();
 
 int(*mpg123_param)(void* mh, int key, long val, int ZERO, double fval);
 
-void InitialiseSkyBox();
-
 int mpg123_param_hook(void* mh, int key, long val, int ZERO, double fval)
 {
     // 0x2000 = MPG123_SKIP_ID3V2
@@ -1762,6 +1766,7 @@ int mpg123_param_hook(void* mh, int key, long val, int ZERO, double fval)
 }
 
 #include "Widgets/TouchInterface.h"
+
 void InjectHooks()
 {
     FLog("InjectHooks");
@@ -1847,163 +1852,9 @@ void InstallUrezHooks()
     *(char*)(g_libGTASA + (VER_x32 ? 0x1E8C04 : 0x71406F) + 14) = 't';
 }
 
-//skybox code
-
-#include <dlfcn.h>
-
-CVector vecRot;
-
-RwTexture* pSkyTexture = nullptr;
-const char* m_TextureName = nullptr;
-float m_fRotSpeed = 0.01f;
-
-void SetTexturkaka(const char* texName)
-{
-    if (texName == nullptr)
-        return;
-
-    m_TextureName = texName;
-    pSkyTexture = (RwTexture*)CUtil::LoadTextureFromDB("samp", texName);
-}
-#include "hooks.h"
-
-
-/*void CHooks::InitialiseSkyBox()
-{
-    void* handle = dlopen("libGTASA.so", RTLD_LAZY);
-    auto* dwModelArray = (uintptr_t*)(dlsym(handle, "_ZN10CModelInfo16ms_modelInfoPtrsE"));
-    if (!dwModelArray[18659])
-        return;
-
-    m_pSkyObject = CreateObjectScaled(18659, 2.92f);
-
-    SetTexturkaka("daily_sky_1");
-}*/
-
-/*int CHooks::InitialiseSkyBox()
-{
-int result; // r0
-    void* handle = dlopen("libGTASA.so", RTLD_LAZY);
-    auto* dwModelArray = (uintptr_t*)(dlsym(handle, "_ZN10CModelInfo16ms_modelInfoPtrsE"));
-if ( !dwModelArray[18659] )
-//Log("Error CSkyBox::Init. No mode %d", 0x43D4);
-    m_pSkyObject = CreateObjectScaled(18659, 2.92f);
-    SetTexturkaka("daily_sky_1");
-}*/
 
 
 
-/*void RwMatrixScale(RwMatrix* matrix, CVector* vecScale)
-{
-    CVector vector = vecScale;
-
-    RwMatrixScale(matrix, &vector);
-}
-
-CObject* CreateObjectScaled(int iModel, CVector vecPos, CVector* vecRot, float fScale)
-{
-    //auto *vecRot = new CVector();
-    auto *vecScale = new CVector(fScale);
-
-    //auto
-
-    //vecPos = {0.0f, 0.0f, 0.0f};
-
-    if (!pNetGame)
-        return nullptr;
-
-    if(!pNetGame->GetObjectPool())
-        return nullptr;
-
-    auto *object = pGame->NewObject(iModel, vecPos, vecRot, fScale + 10.7f);
-
-    *(uint32_t*)((uintptr_t)object->m_pEntity + 28) &= 0xFFFFFFFE;
-    *(uint8_t*)((uintptr_t)object->m_pEntity + 29) |= 1;
-
-    object->RemovePhysical();
-
-    RwMatrix matrix;
-    object->thiz->GetMatrix(&matrix);
-
-    RwMatrixScale(&matrix, vecScale);
-
-    object->thiz->SetMatrix(matrix);
-    object->UpdateRwMatrixAndFrame();
-
-    *(uint8_t*)((uintptr_t)object->m_pEntity + 29) |= 1;
-    object->AddPhysical();
-
-    return object;
-}
-
-uintptr_t RwFrameForAllObjectsCallback(uintptr_t object, CObject* pObject)
-{
-    if (*(uint8_t*)object != 1)
-        return object;
-
-    uintptr_t pAtomic = object;
-    RpGeometry* pGeom = *(RpGeometry * *)(pAtomic + 24);
-    if (!pGeom)
-        return object;
-
-    int numMats = pGeom->matList.numMaterials;
-    if (numMats > 16)
-        numMats = 16;
-
-    for (int i = 0; i < numMats; i++)
-    {
-        RpMaterial* pMaterial = pGeom->matList.materials[i];
-        if (!pMaterial)
-            continue;
-
-        if (pSkyTexture)
-            pMaterial->texture = pSkyTexture;
-    }
-
-    return object;
-}
-
-uint8_t pChangeTime;
-void ReTextureSky()
-{
-    int iHours = pNetGame->m_pNetSet->byteHoldTime;
-
-    if (pChangeTime != iHours)
-    {
-        pChangeTime = iHours;
-
-        if (iHours >= 0 && iHours <= 5)
-            SetTexturkaka("night_sky_1");
-
-        if (iHours >= 6 && iHours <= 10)
-            SetTexturkaka("afternoon_sky_1");
-
-        if (iHours >= 11 && iHours <= 18)
-            SetTexturkaka("daily_sky_1");
-
-        if (iHours >= 19 && iHours <= 24)
-            SetTexturkaka("evening_sky_1");
-    }
-
-    uintptr_t pAtomic = m_pSkyObject->m_RwObject;
-    if (!pAtomic)
-        return;
-
-    if (!*(uintptr_t*)(pAtomic + 4))
-        return;
-
-//                DeActivateDirectional
-    ((void(*)())(g_libGTASA + (VER_x32 ? 0x5D1F98:0x6E5A30) + 1))(); // 32 - 0x5D1F98 // 64 - 0x6E5A30
-
-//                SetFullAmbient
-    ((void*(*)())(g_libGTASA + (VER_x32 ? 0x5D204C:0x6F6720) + 1))(); // 32 - 0x5D204C // 64 - 0x6F6720
-
-//                SetAmbientColours
-    ((void(*)())(g_libGTASA + (VER_x32 ? 0x5d2069:0x006f6738) + 1))(); // 32 - 0x5d2069 // 64 - 0x006f6738
-
-//                RwFrameForAllObjects
-    ((uintptr_t(*)(uintptr_t, uintptr_t, CObject*))(g_libGTASA + (VER_x32 ? 0x1D8858:0x2703BC) + 1))(*(uintptr_t*)(pAtomic + 4), (uintptr_t)RwFrameForAllObjectsCallback, m_pSkyObject); // 32 - 0x1D8858 // 64 - 0x2703BC
-}*/
 
 
 void InstallSpecialHooks()
@@ -2064,15 +1915,17 @@ void InstallHooks()
     CHook::InlineHook("_ZN11CBulletInfo9AddBulletEP7CEntity11eWeaponType7CVectorS3_", &CBulletInfo_AddBullet_hook, &CBulletInfo_AddBullet);
 
     //CHook::InlineHook("_ZN11CFileLoader18LoadObjectInstanceEPKc", &CFileLoader__LoadObjectInstance_hook, &CFileLoader__LoadObjectInstance);
-
     CHook::InlineHook("_ZN6CRadar9ClearBlipEi", &CRadar_ClearBlip_hook, &CRadar_ClearBlip);
-
+    CHook::InlineHook("_ZN9CRenderer24RenderEverythingBarRoadsEv", &CRenderer__RenderEverythingBarRoads_hook, &CRenderer__RenderEverythingBarRoads);
     CHook::InlineHook("_ZN10CCollision19ProcessVerticalLineERK8CColLineRK7CMatrixR9CColModelR9CColPointRfbbP15CStoredCollPoly", &CCollision__ProcessVerticalLine_hook, &CCollision__ProcessVerticalLine);
 
     CHook::InlineHook("_ZN19CUpsideDownCarCheck15IsCarUpsideDownEPK8CVehicle", &CUpsideDownCarCheck__IsCarUpsideDown_hook, &CUpsideDownCarCheck__IsCarUpsideDown);
 
     CHook::InlineHook("_ZN16CTaskSimpleGetUp10ProcessPedEP4CPed", &CTaskSimpleGetUp__ProcessPed_hook, &CTaskSimpleGetUp__ProcessPed); // CTaskSimpleGetUp::ProcessPed
     CHook::InlineHook("_ZN7CObject6RenderEv", &CObject_Render_hook, & CObject_Render);
+
+
+    //CHook::InlineHook(g_libGTASA + (VER_x32 ? 0x0029ada9:0x00357130), &MobileMenu_InitForPause_hook, &MobileMenu_InitForPause);
 
     CHook::Redirect("_Z19PlayerIsEnteringCarv", &PlayerIsEnteringCar);
     if(*(uint8_t *)(g_libGTASA + (VER_x32 ? 0x6B8B9C:0x896135)))
@@ -2103,6 +1956,13 @@ void InstallHooks()
     CHook::InlineHook("_Z23RwResourcesFreeResEntryP10RwResEntry", &RwResourcesFreeResEntry_hook, &RwResourcesFreeResEntry);
 
     //CHook::InlineHook("_ZN9CRenderer24RenderEverythingBarRoadsEv", &CRenderer_RenderEverythingBarRoads_hook, &CRenderer_RenderEverythingBarRoads);
+//
+//
+//
+//
+//
+//
+//
 
     ms_fAspectRatio = (float*)(g_libGTASA+(VER_x32 ? 0xA26A90:0xCC7F00));
     CHook::InlineHook("_ZN4CHud14DrawCrossHairsEv", &DrawCrosshair_hook, &DrawCrosshair);
@@ -2131,7 +1991,6 @@ void InstallHooks()
 #endif*/
 
 
-    //InitialiseSkyBox();
 
     //m_pSkyObject = CreateObjectScaled(18659, 2.92f);
     //SetTexturkaka("daily_sky_1");

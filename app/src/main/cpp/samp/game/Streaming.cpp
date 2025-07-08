@@ -22,6 +22,7 @@
 extern UI *pUI;
 
 bool CStreaming::TryLoadModel(int modelId) {
+    pUI->chat()->addDebugMessage("куда мы лезем");
     FLog("TryLoadModel %d", modelId);
     if(!CStreaming::GetInfo(modelId).IsLoaded()) {
         FLog("TryLoadModel 1");
