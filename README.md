@@ -1,12 +1,12 @@
 # ᐳ SA:MP Mobile Client 2.10 (x64) for GTA: San Andreas
 
-# ᐳ Description \ Description
-> * Architecture \ Architecture: `arm64-v8a`, `armeabi-v7a`
-> * Type \ Type: `Modified SA:MP client` 
-> * Security \ Security: `Partial` 
-> * Status: `Supported / Supported`
+# ᐳ Description
+> * Arch: `arm64-v8a`, `armeabi-v7a`
+> * Type: `Modified SA:MP client` 
+> * Security: `https://github.com/ac3ss0r/obfusheader.h` 
+> * Status: `Supported`
 
-# ᐳ Features \ Features
+# ᐳ Features
 > * Support `arm64` and `arm32`
 > * Built-in OpenGL reflections (cars)
 > * WaterShader
@@ -17,7 +17,7 @@
 > * Support for the kick button 
 > * Compatibility with SA:MP 0.3.7
 
-# ᐳ Development \ Credit's
+# ᐳ Credit's
 > - **x1y2z** — Author 
 > - [**kuzia15**](https://github.com/kuzia15) — OpenGL, small improvements
 
