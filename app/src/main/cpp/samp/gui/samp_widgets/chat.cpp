@@ -12,8 +12,9 @@ extern CNetGame* pNetGame;
 extern CSettings* pSettings;
 extern CJavaWrapper *pJavaWrapper;
 
-Chat::Chat()
-	: ListBox()
+bool g_bChatVisible = true;
+
+Chat::Chat() : ListBox()
 {
 
 }
@@ -102,9 +103,26 @@ void Chat::touchPopEvent()
 
 void Chat::keyboardEvent(const std::string& input)
 {
-	if (input.length() > 0 && pNetGame)
+    if (input.length() > 0 && pNetGame)
+    {
+        if (input[0] == '/')
+        {
+            pUI->chat()->commandClient(input.c_str());
+            pNetGame->SendChatCommand(input.c_str()); //--
+        }
+        else
+            pNetGame->SendChatMessage(input.c_str());
+    }
+}
+
+bool Chat::commandClient(const std::string& command) //--
+{
+	if(command == "/test_hud")
 	{
-		if (input[0] == '/') pNetGame->SendChatCommand(input.c_str());
-		else pNetGame->SendChatMessage(input.c_str());
+		pUI->chat()->addDebugMessage("Тест худа");
+        pJavaWrapper->ShowHud();
+		return true;
 	}
+
+    return false;
 }

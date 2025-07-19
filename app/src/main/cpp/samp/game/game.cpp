@@ -13,6 +13,7 @@
 #include "Pickups.h"
 #include "game/Models/ModelInfo.h"
 #include "game/Collision/Collision.h"
+#include "World.h"
 
 void ApplySAMPPatchesInGame();
 void InitScripting();
@@ -553,6 +554,11 @@ void CGame::DisableRaceCheckpoint()
 	m_bRaceCheckpointsEnabled = false;
 }
 
+uint8_t CGame::GetWantedLevel()
+{
+    return *(uint8_t*)(g_libGTASA + (VER_x32 ? 0x002BDFDC : 0x0037E160));
+}
+
 void CGame::SetWantedLevel(uint8_t level)
 {
 	//CHook::WriteMemory(g_libGTASA+0x2BDF6E, (uintptr_t)&level, 1);
@@ -591,7 +597,7 @@ void CGame::ResetLocalMoney()
 // 0.3.7
 int CGame::GetLocalMoney()
 {
-	return 0;
+    return *(int*)((uintptr_t)CWorld::Players + 0xF4);
 }
 // 0.3.7
 void CGame::DisableEnterExits()
@@ -888,7 +894,7 @@ void CGame::Process() {
         // CPedToPlayerConversations::Update()
         // CBridge::Update()
 
-        ((void (*)()) (g_libGTASA + (VER_x32 ? 0x005A3E40 + 1 : 0x6C75E4)))(); // CCoronas::DoSunAndMoon()
+        //((void (*)()) (g_libGTASA + (VER_x32 ? 0x005A3E40 + 1 : 0x6C75E4)))(); // CCoronas::DoSunAndMoon()
         ((void (*)()) (g_libGTASA + (VER_x32 ? 0x005A22C8 + 1 : 0x6C5BE0)))(); // CCoronas::Update()
         ((void (*)()) (g_libGTASA + (VER_x32 ? 0x005BD370 + 1 : 0x6E1BC4)))(); // CShadows::UpdatePermanentShadows()
 

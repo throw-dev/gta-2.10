@@ -3,22 +3,18 @@ package com.samp.mobile.game;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.joom.paranoid.Obfuscate;
 import com.samp.mobile.game.ui.AttachEdit;
 import com.samp.mobile.game.ui.CustomKeyboard;
 import com.samp.mobile.game.ui.LoadingScreen;
-import com.samp.mobile.game.ui.Speedometer;
 import com.samp.mobile.game.ui.dialog.DialogManager;
-import com.samp.mobile.game.ui.hud.HudManager;
-import com.samp.mobile.launcher.util.SharedPreferenceCore;
-import com.samp.mobile.launcher.util.SignatureChecker;
+import com.samp.mobile.launcher.activity.MainActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+
+
 @Obfuscate
 public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightProvider.HeightListener {
     private static final String TAG = "SAMP";
@@ -27,11 +23,10 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
     private CustomKeyboard mKeyboard;
     private DialogManager mDialog;
     private HeightProvider mHeightProvider;
-    private Speedometer mSpeedometer;
-    private HudManager mHudManager;
 
     private AttachEdit mAttachEdit;
     private LoadingScreen mLoadingScreen;
+    private MainActivity mMainActivity;
 
     public native void sendDialogResponse(int i, int i2, int i3, byte[] str);
 
@@ -74,6 +69,8 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
         });
     }
 
+
+
     public void setPauseState(boolean pause) {
         runOnUiThread(new Runnable() {
             @Override
@@ -93,8 +90,6 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
     }
 
     public void exitGame(){
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(false);
-
         finishAndRemoveTask();
         System.exit(0);
     }
@@ -105,13 +100,6 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
         final String leftBtnText = new String(bArr3, StandardCharsets.UTF_8);
         final String rightBtnText = new String(bArr4, StandardCharsets.UTF_8);
         runOnUiThread(() -> { this.mDialog.show(dialogId, dialogTypeId, caption, content, leftBtnText, rightBtnText); });
-    }
-
-    public void showHud() {
-        runOnUiThread(() -> { this.mHudManager.ShowHud(); });
-    }
-    public void updateHudInfo(int health, int armour, int hunger, int weaponidweik, int ammo, int playerid, int money, int wanted) {
-        runOnUiThread(() -> { this.mHudManager.UpdateHudInfo(health, armour, hunger, weaponidweik, ammo, playerid, money, wanted); });
     }
 
     private native void onInputEnd(byte[] str);
@@ -156,7 +144,6 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
             }
         });
     }
-
     private void showEditObject()
     {
         runOnUiThread(new Runnable() {
@@ -182,22 +169,17 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
         Log.i(TAG, "**** onCreate");
         super.onCreate(savedInstanceState);
 
-        //if(!SignatureChecker.isSignatureValid(this, getPackageName()))
-        //{
-            //Toast.makeText(this, "Use original launcher! No remake", Toast.LENGTH_LONG).show();
-            //return;
-        //}
-
         //mHeightProvider = new HeightProvider(this);
 
         mKeyboard = new CustomKeyboard(this);
 
         mDialog = new DialogManager(this);
-        mHudManager = new HudManager(this);
 
         mAttachEdit = new AttachEdit(this);
 
         mLoadingScreen = new LoadingScreen(this);
+
+        mMainActivity = new MainActivity();
 
         instance = this;
 

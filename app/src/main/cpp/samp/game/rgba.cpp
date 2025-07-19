@@ -5,7 +5,7 @@
     Do not delete this comment block. Respect others' work!
 */
 
-#include "rgba.h"
+#include "RGBA.h"
 #include "common.h"
 
 CRGBA::CRGBA(RwRGBAReal rgba) :

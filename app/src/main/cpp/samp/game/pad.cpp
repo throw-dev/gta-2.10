@@ -840,6 +840,9 @@ void AllVehicles__ProcessControl_hook(uintptr_t thiz)
     (( void (*)(CVehicleGTA*))(g_libGTASA + call_addr + (VER_x32 ? 1 : 0)))(pVehicle);
 }
 
+//const char* newLightingColorString = "Out_LightingColor = AmbientLightColor * 3.0 * MaterialAmbient.xyz";
+//    WriteMemory(g_libGTASA + 0x00571BD8, (uintptr_t)newLightingColorString, strlen(newLightingColorString));
+
 extern float * pfCameraExtZoom;
 void (*CPed__ProcessControl)(uintptr_t thiz);
 void CPed__ProcessControl_hook(uintptr_t thiz)

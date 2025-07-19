@@ -1,7 +1,3 @@
-//
-// Created by x1y2z on 06.05.2023.
-//
-
 #include "AnimBlendNode.h"
 #include "AnimBlendAssociation.h"
 #include "../vendor/armhook/patch.h"

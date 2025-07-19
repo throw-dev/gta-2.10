@@ -16,7 +16,9 @@ public:
 
 	virtual void activateEvent(bool active) override;
 	virtual void touchPopEvent() override;
-	virtual void keyboardEvent(const std::string& input) override;
+    virtual void keyboardEvent(const std::string& input) override;
+
+    [[maybe_unused]] static bool commandClient(const std::string& command);
 
 private:
 	void addMessage(const std::string& messsage, const ImColor& color = ImColor(1.0f, 1.0f, 1.0f));

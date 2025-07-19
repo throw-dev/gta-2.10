@@ -109,9 +109,6 @@ void InitGame(RPCParameters* rpcParams)
 	}
 
 	//InstallWeaponFireHooks();
-	if (pGame && !pSettings->Get().bAutoAim) {
-		//DisableAutoAim();
-	}
 
 	uint8_t byteStrLen;
 	bsInitGame.Read(byteStrLen);
@@ -157,9 +154,9 @@ void InitGame(RPCParameters* rpcParams)
 	pPlayerPool->GetLocalPlayer()->HandleClassSelection();
 
 	
-	if (pUI) {
-		pUI->voicebutton()->setVisible(true);
-	}
+	//if (pUI) {
+		//pUI->voicebutton()->setVisible(true);
+	//}
 
 	/*if (pVoice && pVoice->recorder()->active())
 	{

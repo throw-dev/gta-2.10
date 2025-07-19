@@ -1,7 +1,3 @@
-//
-// Created by x1y2z on 26.07.2023.
-//
-
 #include "Camera.h"
 #include "../vendor/armhook/patch.h"
 #include "scripting.h"

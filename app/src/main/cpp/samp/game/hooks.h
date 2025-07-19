@@ -10,6 +10,14 @@ class CObject;
 
 class CHooks {
 public:
+    //static void InitialiseSkyBox();
 
 
+    int InitialiseSkyBox();
+
+private:
+    static CObject* CreateObjectScaled(int iModel, float fScale);
+
+private:
+    void InitialiseSkyBoxxx();
 };

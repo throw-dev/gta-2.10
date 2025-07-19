@@ -1,6 +1,3 @@
-//
-// Created by x1y2z on 28.04.2023.
-//
 
 #ifndef LIVERUSSIA_MEMORYMGR_H
 #define LIVERUSSIA_MEMORYMGR_H

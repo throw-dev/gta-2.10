@@ -1,7 +1,3 @@
-//
-// Created by x1y2z on 19.04.2023.
-//
-
 #include "CdStreamInfo.h"
 #include "../vendor/armhook/patch.h"
 

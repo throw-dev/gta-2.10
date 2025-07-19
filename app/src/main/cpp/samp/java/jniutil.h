@@ -22,7 +22,10 @@ public:
     void HideLoadingScreen();
     void ShowTab();
     void HideTab();
-    void UpdateHudInfo(int health, int armour, int hunger, int weaponidweik, int ammo, int ammoinclip, int money, int wanted);
+
+    void UpdateHudInfo(int health, int armour, int weaponid, int ammo, int ammoinclip, int money, int wanted);
+    void ShowHud();
+    void HideHud();
 
     void SetTab(int id, char* names, int score, int pings);
     void ClearTab();
@@ -42,8 +45,6 @@ public:
 
     void ShowDialog(int dialogStyle, int dialogID, char* title, char* text, char* button1, char* button2);
 
-    void ShowHud();
-
 	void ShowEditObject();
 	void HideEditObject();
 
@@ -52,10 +53,8 @@ public:
     jmethodID s_showLoadingScreen;
     jmethodID s_hideLoadingScreen;
     jmethodID s_ShowDialog;
-    jmethodID s_ShowHud;
     jmethodID s_showTab;
     jmethodID s_setTab;
-    jmethodID s_updateHudInfo;
     jmethodID s_clearTab;
     jmethodID s_hideTab;
     jmethodID s_showInputLayout;
@@ -63,4 +62,8 @@ public:
 	jmethodID s_exitGame;
 	jmethodID s_showEditObject;
 	jmethodID s_hideEditObject;
+
+    jmethodID s_showHud;
+    jmethodID s_hideHud;
+    jmethodID s_updateHudInfo;
 };

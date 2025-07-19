@@ -12,9 +12,10 @@ CJavaWrapper::CJavaWrapper(JNIEnv *env, jobject activity)
         FLog("no clas");
         return;
     }
-    s_updateHudInfo = env->GetMethodID(clas, "updateHudInfo", "(IIIIIIII)V");
+
     s_showTab = env->GetMethodID(clas, "showTab", "()V");
     s_hideTab = env->GetMethodID(clas, "hideTab", "()V");
+
     s_clearTab = env->GetMethodID(clas, "clearTab", "()V");
     s_setTab = env->GetMethodID(clas, "setTab", "(ILjava/lang/String;II)V");
 
@@ -25,8 +26,6 @@ CJavaWrapper::CJavaWrapper(JNIEnv *env, jobject activity)
     
     s_ShowDialog = env->GetMethodID(clas, "showDialog", "(II[B[B[B[B)V");
 
-    s_ShowHud = env->GetMethodID(clas, "showHud", "()V");
-
 	s_showInputLayout = env->GetMethodID(clas, "showKeyboard", "()V");
     s_hideInputLayout = env->GetMethodID(clas, "hideKeyboard", "()V");
 
@@ -34,6 +33,10 @@ CJavaWrapper::CJavaWrapper(JNIEnv *env, jobject activity)
 
     s_showEditObject = env->GetMethodID(clas, "showEditObject", "()V");
     s_hideEditObject = env->GetMethodID(clas, "hideEditObject", "()V");
+
+    s_updateHudInfo = env->GetMethodID(clas, "updateHudInfo", "(IIIIIII)V");
+    s_showHud = env->GetMethodID(clas, "showHud", "()V");
+    s_hideHud = env->GetMethodID(clas, "hideHud", "()V");
 
     env->DeleteLocalRef(clas);
 }
@@ -152,7 +155,7 @@ void CJavaWrapper::ShowDialog(int dialogStyle, int dialogID, char* title, char* 
 	EXCEPTION_CHECK(env);
 }
 
-void CJavaWrapper::UpdateHudInfo(int health, int armour, int hunger, int weaponidweik, int ammo, int ammoinclip, int money, int wanted)
+void CJavaWrapper::UpdateHudInfo(int health, int armour, int weaponid, int ammo, int ammoinclip, int money, int wanted)
 {
     JNIEnv* env;
     javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
@@ -163,26 +166,35 @@ void CJavaWrapper::UpdateHudInfo(int health, int armour, int hunger, int weaponi
         return;
     }
 
-    env->CallVoidMethod(this->activity, this->s_updateHudInfo, health, armour, hunger, weaponidweik, ammo, ammoinclip, money, wanted);
+    env->CallVoidMethod(this->activity, this->s_updateHudInfo, health, armour, weaponid, ammo, ammoinclip, money, wanted);
 }
-#include "../net/netgame.h"
-extern CNetGame *pNetGame;
+
 void CJavaWrapper::ShowHud()
 {
-    JNIEnv* p;
-    javaVM->GetEnv((void**)&p, JNI_VERSION_1_6);
+    JNIEnv* env;
+    javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
 
-    p->CallVoidMethod(activity, s_ShowHud);
-    CJavaWrapper::UpdateHudInfo(
-            pGame->FindPlayerPed()->GetHealth(),
-            pGame->FindPlayerPed()->GetArmour(),
-            0,
-            pNetGame->GetPlayerPool()->GetLocalPlayer()->GetPlayerPed()->m_pPed->m_aWeapons[pNetGame->GetPlayerPool()->GetLocalPlayer()->GetPlayerPed()->m_pPed->m_nActiveWeaponSlot].dwType,
-            pNetGame->GetPlayerPool()->GetLocalPlayer()->GetPlayerPed()->m_pPed->m_aWeapons[pNetGame->GetPlayerPool()->GetLocalPlayer()->GetPlayerPed()->m_pPed->m_nActiveWeaponSlot].dwAmmo,
-            pNetGame->GetPlayerPool()->GetLocalPlayer()->GetPlayerPed()->m_pPed->m_aWeapons[pNetGame->GetPlayerPool()->GetLocalPlayer()->GetPlayerPed()->m_pPed->m_nActiveWeaponSlot].dwAmmoInClip,
-            pGame->GetLocalMoney(),
-            0);
-    EXCEPTION_CHECK(p);
+    if (!env)
+    {
+        FLog("No env");
+        return;
+    }
+    //g_pJavaWrapper->ShowNotification(4, "HUD показан.", 5, "", "Хорошо");
+    env->CallVoidMethod(this->activity, this->s_showHud);
+}
+
+void CJavaWrapper::HideHud()
+{
+    JNIEnv* env;
+    javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
+
+    if (!env)
+    {
+        FLog("No env");
+        return;
+    }
+    //g_pJavaWrapper->ShowNotification(4, "HUD скрыт.", 5, "", "Хорошо");
+    env->CallVoidMethod(this->activity, this->s_hideHud);
 }
 
 void CJavaWrapper::exitGame() {

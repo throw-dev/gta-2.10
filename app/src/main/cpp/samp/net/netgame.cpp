@@ -99,10 +99,8 @@ CNetGame::CNetGame(const char* szHostOrIp, int iPort, const char *szPlayerName, 
     pJavaWrapper->HideLoadingScreen();
 
     const char* sampVer = SAMP_VERSION;
-    if(pSettings)
-        sampVer = pSettings->Get().szVersion;
 
-	if (pUI) pUI->chat()->addDebugMessage("{FFFFFF}2.1 Client started", sampVer);
+	if (pUI) pUI->chat()->addDebugMessage("Client {00ff11}TGRP{ffffff} started...");
 }
 // 0.3.7
 CNetGame::~CNetGame()
@@ -594,7 +592,7 @@ void CNetGame::Packet_ConnectionSucceeded(Packet *pkt)
 	uint8_t byteAuthBSLen = strlen(AUTH_BS);
 	uint8_t byteClientVerLen = strlen(SAMP_VERSION);
     if(pSettings)
-        byteClientVerLen = strlen(pSettings->Get().szVersion);
+        byteClientVerLen = strlen(SAMP_VERSION);
 
 
 	RakNet::BitStream bsSend;
@@ -606,16 +604,14 @@ void CNetGame::Packet_ConnectionSucceeded(Packet *pkt)
 	bsSend.Write(byteAuthBSLen);
 	bsSend.Write(AUTH_BS, byteAuthBSLen);
 	bsSend.Write(byteClientVerLen);
-	//bsSend.Write(SAMP_VERSION, byteClientVerLen);
     if(pSettings)
-        bsSend.Write(pSettings->Get().szVersion, byteClientVerLen);
+        bsSend.Write(SAMP_VERSION, byteClientVerLen);
     else
         bsSend.Write(SAMP_VERSION, byteClientVerLen);
 
 	Network::OnRaknetRpc(RPC_ClientJoin, bsSend);
 
 	m_pRakClient->RPC(&RPC_ClientJoin, &bsSend, HIGH_PRIORITY, RELIABLE, 0, false, UNASSIGNED_NETWORK_ID, nullptr);
-
 	// voice
 	SpeakerList::Hide();
 	MicroIcon::Hide();

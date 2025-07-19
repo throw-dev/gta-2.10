@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/hud_main"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:layout_gravity="end"
+	android:clipChildren="false">
+
+	<ImageView
+		android:id="@+id/weaponBG"
+		android:layout_width="100dp"
+		android:layout_height="100dp"
+		android:layout_marginTop="12dp"
+		android:layout_marginEnd="12dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:srcCompat="@drawable/hud_b" />
+
+	<ImageView
+		android:id="@+id/weapon_ammo_image"
+		android:layout_width="50dp"
+		android:layout_height="50dp"
+		app:layout_constraintBottom_toBottomOf="@+id/weaponBG"
+		app:layout_constraintEnd_toEndOf="@+id/weaponBG"
+		app:layout_constraintStart_toStartOf="@+id/weaponBG"
+		app:layout_constraintTop_toTopOf="@+id/weaponBG"
+		app:layout_constraintVertical_bias="0.3"
+		app:srcCompat="@drawable/weapon_10" />
+
+	<ImageView
+		android:id="@+id/moneyBG"
+		android:layout_width="110dp"
+		android:layout_height="20dp"
+		android:layout_marginTop="4dp"
+		android:layout_marginEnd="12dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/weaponBG"
+		app:srcCompat="@drawable/hud_c" />
+
+	<TextView
+		android:id="@+id/money_text"
+		android:layout_width="110dp"
+		android:layout_height="20dp"
+		android:fontFamily="@font/montserrat_bold"
+		android:gravity="center"
+		android:text="$ 9.999.999.999"
+		android:textColor="@color/white"
+		android:textSize="10dp"
+		app:layout_constraintBottom_toBottomOf="@+id/moneyBG"
+		app:layout_constraintEnd_toEndOf="@+id/moneyBG"
+		app:layout_constraintStart_toStartOf="@+id/moneyBG"
+		app:layout_constraintTop_toTopOf="@+id/moneyBG" />
+
+	<TextView
+		android:id="@+id/weapon_ammo_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="4dp"
+		android:fontFamily="@font/montserrat_bold"
+		android:text="99 / 1000"
+		android:textColor="@color/white"
+		android:textSize="15dp"
+		app:layout_constraintEnd_toEndOf="@+id/weaponBG"
+		app:layout_constraintStart_toStartOf="@+id/weaponBG"
+		app:layout_constraintTop_toBottomOf="@+id/weapon_ammo_image" />
+
+	<TextView
+		android:id="@+id/textPlayerID"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="4dp"
+		android:layout_marginBottom="4dp"
+		android:fontFamily="@font/montserrat_bold"
+		android:text="PlayerID: 999"
+		android:textColor="@color/white"
+		android:textSize="8dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<ImageView
+		android:id="@+id/wanted_bg"
+		android:layout_width="30dp"
+		android:layout_height="48dp"
+		android:layout_marginTop="40dp"
+		android:layout_marginEnd="44dp"
+		app:layout_constraintEnd_toStartOf="@+id/weaponBG"
+		app:layout_constraintTop_toTopOf="parent"
+		app:srcCompat="@drawable/hud_d" />
+
+	<TextView
+		android:id="@+id/wantedtext"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="32dp"
+		android:fontFamily="@font/muller_bold"
+		android:text="6"
+		android:textColor="@color/white"
+		android:textSize="10dp"
+		app:layout_constraintEnd_toEndOf="@+id/wanted_bg"
+		app:layout_constraintStart_toStartOf="@+id/wanted_bg"
+		app:layout_constraintTop_toTopOf="@+id/wanted_bg" />
+
+	<ImageView
+		android:id="@+id/wanted_icon"
+		android:layout_width="23dp"
+		android:layout_height="23dp"
+		android:layout_marginTop="6dp"
+		app:layout_constraintEnd_toEndOf="@+id/wanted_bg"
+		app:layout_constraintStart_toStartOf="@+id/wanted_bg"
+		app:layout_constraintTop_toTopOf="@+id/wanted_bg"
+		app:srcCompat="@drawable/ic_star" />
+
+	<ImageView
+		android:id="@+id/armour_bg"
+		android:layout_width="30dp"
+		android:layout_height="48dp"
+		android:layout_marginTop="4dp"
+		android:layout_marginEnd="4dp"
+		app:layout_constraintEnd_toStartOf="@+id/weaponBG"
+		app:layout_constraintTop_toBottomOf="@+id/health_bg"
+		app:srcCompat="@drawable/hud_d" />
+
+	<ImageView
+		android:id="@+id/health_bg"
+		android:layout_width="30dp"
+		android:layout_height="48dp"
+		android:layout_marginTop="12dp"
+		android:layout_marginEnd="4dp"
+		app:layout_constraintEnd_toStartOf="@+id/weaponBG"
+		app:layout_constraintTop_toTopOf="parent"
+		app:srcCompat="@drawable/hud_d" />
+
+	<ImageView
+		android:id="@+id/health_icon"
+		android:layout_width="23dp"
+		android:layout_height="23dp"
+		android:layout_marginTop="6dp"
+		app:layout_constraintEnd_toEndOf="@+id/health_bg"
+		app:layout_constraintStart_toStartOf="@+id/health_bg"
+		app:layout_constraintTop_toTopOf="@+id/health_bg"
+		app:srcCompat="@drawable/ic_hud_hp" />
+
+	<ImageView
+		android:id="@+id/armour_icon"
+		android:layout_width="23dp"
+		android:layout_height="23dp"
+		android:layout_marginTop="6dp"
+		app:layout_constraintEnd_toEndOf="@+id/armour_bg"
+		app:layout_constraintStart_toStartOf="@+id/armour_bg"
+		app:layout_constraintTop_toTopOf="@+id/armour_bg"
+		app:srcCompat="@drawable/ic_hud_armor" />
+
+	<TextView
+		android:id="@+id/healthtext"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/muller_bold"
+		android:text="100"
+		android:textColor="@color/white"
+		android:textSize="10dp"
+		app:layout_constraintEnd_toEndOf="@+id/health_bg"
+		app:layout_constraintStart_toStartOf="@+id/health_bg"
+		app:layout_constraintTop_toBottomOf="@+id/health_icon" />
+
+	<TextView
+		android:id="@+id/armour_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/muller_bold"
+		android:text="100"
+		android:textColor="@color/white"
+		android:textSize="10dp"
+		app:layout_constraintEnd_toEndOf="@+id/armour_icon"
+		app:layout_constraintStart_toStartOf="@+id/armour_icon"
+		app:layout_constraintTop_toBottomOf="@+id/armour_icon" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

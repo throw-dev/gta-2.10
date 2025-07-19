@@ -21,8 +21,8 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 import com.joom.paranoid.Obfuscate;
 import com.nvidia.devtech.NvEventQueueActivity;
 import com.samp.mobile.R;
-import com.samp.mobile.launcher.util.CustomRecyclerView;
-import com.samp.mobile.launcher.util.Util;
+import com.samp.mobile.launcher.other.CustomRecyclerView;
+import com.samp.mobile.launcher.other.Util;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;

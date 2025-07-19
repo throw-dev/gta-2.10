@@ -1,8 +1,8 @@
 #pragma once
 
 #include <deque>
-#include "../vendor/raknet/BitStream.h"
-#include "../vendor/raknet/RakClient.h"
+#include "../vendor/RakNet/BitStream.h"
+#include "../vendor/RakNet/RakClient.h"
 
 #include "include/SPSCQueue.h"
 

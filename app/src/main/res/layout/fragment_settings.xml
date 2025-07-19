@@ -1,332 +1,161 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<?xml version="1.0" encoding="utf-8" ?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:clickable="true" android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<ImageView android:background="#ff1d1620" android:layout_width="fill_parent" android:layout_height="fill_parent" android:scaleType="fitXY" />
+	<ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:scaleType="fitXY" app:srcCompat="@drawable/launcher_bg" />
+	<androidx.constraintlayout.widget.ConstraintLayout android:id="@id/settings_layout" android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-    <EditText
-        android:id="@+id/settings_nickname"
-        android:layout_width="@dimen/_250sdp"
-        android:layout_height="@dimen/_35sdp"
-        android:background="@drawable/ic_nickname_bg"
-        android:hint="NickName"
-        android:lines="1"
-        android:ems="24"
-        android:inputType="textPersonName"
-        android:fontFamily="@font/montserrat_bold"
-        android:textColor="@color/white"
-        android:textColorHint="@color/gray"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.12" />
+		<androidx.constraintlayout.widget.Guideline
+			android:id="@id/guideline44"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			app:layout_constraintGuide_end="699dp" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Settings"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_25sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.076" />
+		<androidx.constraintlayout.widget.Guideline
+			android:id="@id/guideline45"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			app:layout_constraintGuide_percent="0.95" />
+		<androidx.constraintlayout.widget.Guideline android:orientation="horizontal" android:id="@id/guideline43" android:layout_width="wrap_content" android:layout_height="wrap_content" app:layout_constraintGuide_percent="0.065" />
+		<LinearLayout android:orientation="horizontal" android:id="@id/header_layout" android:paddingBottom="@dimen/_24sdp" android:layout_width="0.0dip" android:layout_height="wrap_content" app:layout_constraintEnd_toStartOf="@id/guideline45" app:layout_constraintStart_toStartOf="@id/guideline44" app:layout_constraintTop_toTopOf="@id/guideline43">
+			<LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1.0">
+				<TextView android:textSize="@dimen/_16sdp" android:textColor="#ffffffff" android:id="@id/story_caption_top" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Настройки" android:fontFamily="@font/ttnorms_regular" />
+				<TextView android:textSize="@dimen/_16sdp" android:textColor="#ffffffff" android:id="@id/story_caption_bottom" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="приложения" android:fontFamily="@font/ttnorms_bold" />
+			</LinearLayout>
+			<ImageView android:layout_gravity="center_vertical" android:id="@id/btn_close" android:layout_width="@dimen/_23sdp" android:layout_height="@dimen/_23sdp" android:layout_marginStart="@dimen/_14sdp" app:srcCompat="@drawable/ic_launcher_close" />
+		</LinearLayout>
 
-    <View
-        android:id="@+id/view3"
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_3sdp"
-        android:background="#FF0037"
-        app:layout_constraintBottom_toTopOf="@+id/settings_nickname"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.268" />
+		<ScrollView
+			android:layout_width="0.0dip"
+			android:layout_height="0.0dip"
+			android:fadeScrollbars="false"
+			android:scrollbarSize="@dimen/_4sdp"
+			android:scrollbarThumbVertical="@drawable/ic_launcher_scrollbar_thumb"
+			android:scrollbarTrackVertical="@drawable/ic_launcher_scrollbar_track"
+			android:scrollbars="vertical"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/guideline45"
+			app:layout_constraintStart_toStartOf="@id/guideline44"
+			app:layout_constraintTop_toBottomOf="@id/header_layout">
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Copyright x1y2z"
-        android:textColor="#AEAEAE"
-        android:textSize="@dimen/_15sdp"
-        android:fontFamily="@font/montserrat_regular"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.92" />
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Android Keyboard"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.165"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.11" />
+				<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:paddingBottom="@dimen/_32sdp">
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/keyboard_switch"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:checked="false"
-        android:textOn=""
-        android:textOff=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.875"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.1" />
+					<TextView
+						android:id="@+id/account_not_auth_text"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/ttnorms_regular"
+						android:paddingBottom="@dimen/_7sdp"
+						android:text="Укажите ник в окно ниже"
+						android:textColor="#ffffffff"
+						android:textSize="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Voice chat"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.135"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.185" />
+					<FrameLayout
+						android:id="@+id/account_layout"
+						android:layout_width="match_parent"
+						android:layout_height="@dimen/_42sdp">
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/voice_switch"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:checked="false"
-        android:textOn=""
-        android:textOff=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.875"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.175" />
+						<ImageView
+							android:id="@+id/account_background"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							app:srcCompat="@drawable/auth_bg_email" />
 
-    <TextView
-        android:id="@+id/textView29"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Display FPS"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.135"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.26" />
+						<ImageView
+							android:id="@+id/account_image"
+							android:layout_width="@dimen/_20sdp"
+							android:layout_height="@dimen/_20sdp"
+							android:layout_gravity="center_vertical"
+							android:layout_marginStart="@dimen/_12sdp"
+							app:srcCompat="@drawable/ic_launcher_user" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/fps_switch"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:textOn=""
-        android:textOff=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.875"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.25" />
+						<EditText
+							android:id="@+id/account_text"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_gravity="center"
+							android:layout_marginStart="@dimen/_37sdp"
+							android:layout_marginEnd="@dimen/_37sdp"
+							android:fontFamily="@font/ttnorms_regular"
+							android:gravity="center"
+							android:hint="Ваш игровой ник"
+							android:imeOptions="flagNoExtractUi|flagNoFullscreen|actionDone"
+							android:inputType="text"
+							android:lines="1"
+							android:maxLines="1"
+							android:singleLine="true"
+							android:textColor="#ffffffff"
+							android:textSize="@dimen/_12sdp"
+							app:autoSizeMaxTextSize="@dimen/_12sdp"
+							app:autoSizeMinTextSize="@dimen/_3sdp"
+							app:autoSizeTextType="uniform" />
+					</FrameLayout>
+				</LinearLayout>
 
-    <TextView
-        android:id="@+id/textView46"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Modified data"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.145"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.335" />
+				<FrameLayout
+					android:id="@id/btn_reinstall_client"
+					android:layout_width="fill_parent"
+					android:layout_height="@dimen/_42sdp"
+					android:layout_marginBottom="@dimen/_16sdp"
+					android:background="@drawable/auth_bg_button">
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/modify_switch"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:textOn=""
-        android:textOff=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.875"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.33" />
+					<TextView
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center"
+						android:layout_marginStart="@dimen/_37sdp"
+						android:layout_marginEnd="@dimen/_37sdp"
+						android:fontFamily="@font/ttnorms_medium"
+						android:gravity="center"
+						android:maxLines="1"
+						android:text="Переустановить клиент"
+						android:textColor="#ffffffff"
+						android:textSize="@dimen/_12sdp"
+						app:autoSizeMaxTextSize="@dimen/_12sdp"
+						app:autoSizeMinTextSize="@dimen/_3sdp"
+						app:autoSizeTextType="uniform" />
+				</FrameLayout>
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Chat messages"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.155"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.410" />
+				<FrameLayout
+					android:id="@id/btn_reinstall_data"
+					android:layout_width="fill_parent"
+					android:layout_height="@dimen/_42sdp"
+					android:layout_marginBottom="@dimen/_16sdp"
+					android:background="@drawable/auth_bg_button">
 
-    <androidx.appcompat.widget.AppCompatSeekBar
-        android:id="@+id/messages_seekbar"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="wrap_content"
-        android:max="3"
-        android:progress="1"
-        android:progressDrawable="@drawable/seekbar_drawable"
-        android:splitTrack="false"
-        android:thumb="@drawable/seekbar_thumb"
-        android:thumbTint="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.846"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.415" />
+					<TextView
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center"
+						android:layout_marginStart="@dimen/_37sdp"
+						android:layout_marginEnd="@dimen/_37sdp"
+						android:fontFamily="@font/ttnorms_medium"
+						android:gravity="center"
+						android:maxLines="1"
+						android:text="Переустановить файлы"
+						android:textColor="#ffffffff"
+						android:textSize="@dimen/_12sdp"
+						app:autoSizeMaxTextSize="@dimen/_12sdp"
+						app:autoSizeMinTextSize="@dimen/_3sdp"
+						app:autoSizeTextType="uniform" />
+				</FrameLayout>
 
-    <TextView
-        android:id="@+id/messages_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1"
-        android:textColor="@color/white"
-        android:fontFamily="@font/montserrat_bold"
-        android:textSize="@dimen/_9sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/messages_seekbar"
-        app:layout_constraintEnd_toEndOf="@+id/messages_seekbar"
-        app:layout_constraintStart_toStartOf="@+id/messages_seekbar"
-        app:layout_constraintTop_toTopOf="@+id/messages_seekbar" />
+			</LinearLayout>
+		</ScrollView>
 
-    <TextView
-        android:id="@+id/textView35"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="FPS Limit"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.137"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.49" />
-
-    <androidx.appcompat.widget.AppCompatSeekBar
-        android:id="@+id/fps_seekbar"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="wrap_content"
-        android:max="3"
-        android:progress="1"
-        android:progressDrawable="@drawable/seekbar_drawable"
-        android:splitTrack="false"
-        android:thumb="@drawable/seekbar_thumb"
-        android:thumbTint="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.846"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.495" />
-
-    <TextView
-        android:id="@+id/fps_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="30"
-        android:textColor="@color/white"
-        android:fontFamily="@font/montserrat_bold"
-        android:textSize="@dimen/_9sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/fps_seekbar"
-        app:layout_constraintEnd_toEndOf="@+id/fps_seekbar"
-        app:layout_constraintStart_toStartOf="@+id/fps_seekbar"
-        app:layout_constraintTop_toTopOf="@+id/fps_seekbar" />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/monet_switch"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:textOn=""
-        android:textOff=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.875"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.56" />
-
-    <TextView
-        android:id="@+id/textView1868"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Monet Loader"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.155"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.565" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Version"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12sdp"
-        android:fontFamily="@font/montserrat_bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.135"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.635"/>
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="@dimen/_130sdp"
-        android:layout_height="@dimen/_25sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.82"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_nickname"
-        app:layout_constraintVertical_bias="0.64"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-    </Spinner>
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

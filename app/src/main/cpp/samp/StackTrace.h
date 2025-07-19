@@ -1,7 +1,3 @@
-//
-// Created by x1y2z on 20.03.2023.
-//
-
 #ifndef LIVERUSSIA_CSTACKTRACE_H
 #define LIVERUSSIA_CSTACKTRACE_H
 

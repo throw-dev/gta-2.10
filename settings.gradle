@@ -5,5 +5,5 @@ pluginManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Throw Mobile"
+rootProject.name = "GTA SAMP 32x64 2.10"
 include ':app'

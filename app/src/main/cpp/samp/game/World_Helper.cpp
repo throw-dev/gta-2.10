@@ -1,7 +1,3 @@
-//
-// Created by x1y2z on 04.05.2023.
-//
-
 #include "World.h"
 #include "../vendor/armhook/patch.h"
 #include "game.h"

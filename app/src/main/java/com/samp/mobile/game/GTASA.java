@@ -9,8 +9,6 @@ import android.widget.Toast;
 
 import com.bytedance.shadowhook.ShadowHook;
 import com.joom.paranoid.Obfuscate;
-import com.samp.mobile.launcher.util.SharedPreferenceCore;
-import com.samp.mobile.launcher.util.SignatureChecker;
 import com.wardrumstudios.utils.WarMedia;
 
 @Obfuscate
@@ -88,25 +86,11 @@ public class GTASA extends WarMedia {
             once = true;
         }
 
-        //if(!SignatureChecker.isSignatureValid(this, getPackageName()))
-        //{
-        //Toast.makeText(this, "Use original launcher! No remake", Toast.LENGTH_LONG).show();
-        //return;
-        //}
-
         System.out.println("GTASA onCreate");
         //  gtasaSelf = this;
         //  wantsAccelerometer = true;
 
         super.onCreate(bundle);
-
-        if (new SharedPreferenceCore().getBoolean(this, "MLOADER")) {
-            try {
-                System.loadLibrary("monetloader");
-            } catch (ExceptionInInitializerError | UnsatisfiedLinkError e) {
-                Log.e("AXL", e.getMessage());
-            }
-        }
     }
 
     public void onDestroy()

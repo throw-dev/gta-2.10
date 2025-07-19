@@ -57,6 +57,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.joom.paranoid.Obfuscate;
 import com.samp.mobile.R;
+import com.samp.mobile.game.ui.HudManager;
+import com.samp.mobile.launcher.fragment.MainFragment;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -71,18 +73,7 @@ import javax.microedition.khronos.egl.EGLSurface;
 import javax.microedition.khronos.opengles.GL10;
 import javax.microedition.khronos.opengles.GL11;
 
-/**
-A base class used to provide a native-code event-loop interface to an
-application.  This class is designed to be subclassed by the application
-with very little need to extend the Java.  Paired with its native static-link
-library, libnv_event.a, this package makes it possible for native applciations
-to avoid any direct use of Java code.  In addition, input and other events are
-automatically queued and provided to the application in native code via a
-classic event queue-like API.  EGL functionality such as bind/unbind and swap
-are also made available to the native code for ease of application porting.
-Please see the external SDK documentation for an introduction to the use of
-this class and its paired native library.
-*/
+
 @Obfuscate
 public abstract class NvEventQueueActivity extends AppCompatActivity implements SensorEventListener, View.OnTouchListener {
 
@@ -133,6 +124,10 @@ public abstract class NvEventQueueActivity extends AppCompatActivity implements 
     private boolean viewIsActive = false;
 
     private SurfaceView mSurfaceView = null;
+
+    public MainFragment mainFragment;
+
+    private HudManager mHudManager = null;
 
     //private HeightProvider mHeightProvider = null;
 
@@ -216,6 +211,10 @@ public abstract class NvEventQueueActivity extends AppCompatActivity implements 
     }
 
     public native void togglePlayer(int toggle);
+
+    public native void SetRadarBgPos(float x1, float y1, float x2, float y2);
+    public native void SetRadarPos(float x1, float y1, float size);
+    public native void SetRadarEnabled(boolean tf);
 
     public native void onEventBackPressed();
 
@@ -387,20 +386,22 @@ public abstract class NvEventQueueActivity extends AppCompatActivity implements 
      * The application does not and should not overide this; nv_event handles this internally
      * And remaps as needed into the native calls exposed by nv_event.h
      */
-		public native void cleanup();
-		public native boolean init(boolean z);
-		public native void setWindowSize(int w, int h);
-		public native void quitAndWait();
-		public native void postCleanup();
+    public native void cleanup();
+    public native boolean init(boolean z);
+    public native void setWindowSize(int w, int h);
+    public native void quitAndWait();
+    public native void postCleanup();
+    public native void imeClosed();
+    public native void lowMemoryEvent(); // TODO: implement this
+    public native boolean processTouchpadAsPointer(ViewParent viewParent, boolean z);
+    public native void notifyChange(String str, int i);
+    public native void changeConnection(boolean z);
 
-        public native void imeClosed();
+    public void updateHudInfo(int health, int armour, int weaponid, int ammo, int playerid, int money, int wanted) { runOnUiThread(() -> { mHudManager.UpdateHudInfo(health, armour, weaponid, ammo, playerid, money, wanted); }); }
+    public void showHud() { runOnUiThread(() -> { mHudManager.ShowHud(); }); }
+    public void hideHud() { runOnUiThread(() -> { mHudManager.HideHud(); }); }
 
-        public native void lowMemoryEvent(); // TODO: implement this
-        public native boolean processTouchpadAsPointer(ViewParent viewParent, boolean z);
-        public native void notifyChange(String str, int i);
-        public native void changeConnection(boolean z);
-
-		public native void pauseEvent();
+    public native void pauseEvent();
 		public native void resumeEvent();
 		public native boolean touchEvent(int action, int x, int y, MotionEvent event);
 		public native boolean multiTouchEvent(int action, int count, 
@@ -432,6 +433,8 @@ public abstract class NvEventQueueActivity extends AppCompatActivity implements 
         System.out.println("**** onCreate");
         super.onCreate(savedInstanceState);
 
+        mainFragment = new MainFragment();
+
 		if(supportPauseResume)
 		{
 		    System.out.println("Calling init(false)");
@@ -443,6 +446,8 @@ public abstract class NvEventQueueActivity extends AppCompatActivity implements 
 
         NvUtil.getInstance().setActivity(this);
         NvAPKFileHelper.getInstance().setContext(this);
+
+        mHudManager = new HudManager(this);
 
         display = ((WindowManager)this.getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
 
@@ -728,6 +733,8 @@ public abstract class NvEventQueueActivity extends AppCompatActivity implements 
         mSurfaceView = view;
 
         mAndroidUI = findViewById(R.id.ui_layout);
+
+        mHudManager = new HudManager(this);
 
         SurfaceHolder holder = view.getHolder();
         holder.setType(2);

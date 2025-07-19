@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:clickable="true" android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<ImageView android:background="#ff1d1620" android:layout_width="fill_parent" android:layout_height="fill_parent" android:scaleType="fitXY" />
+	<ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:scaleType="fitXY" app:srcCompat="@drawable/launcher_bg" />
+	<androidx.constraintlayout.widget.ConstraintLayout android:id="@id/main_layout" android:layout_width="fill_parent" android:layout_height="fill_parent">
+		<androidx.constraintlayout.widget.Guideline android:orientation="vertical" android:id="@id/guideline46" android:layout_width="wrap_content" android:layout_height="wrap_content" app:layout_constraintGuide_percent="0.13333334" />
+		<androidx.constraintlayout.widget.Guideline android:orientation="vertical" android:id="@id/guideline47" android:layout_width="wrap_content" android:layout_height="wrap_content" app:layout_constraintGuide_percent="0.8666667" />
+		<ImageView android:layout_gravity="center" android:id="@id/download_render" android:layout_width="0.0dip" android:layout_height="0.0dip" android:scaleType="fitEnd" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@id/guideline47" app:layout_constraintHeight_percent="0.6489583" app:layout_constraintStart_toStartOf="@id/guideline46" />
+		<ImageView android:layout_width="0.0dip" android:layout_height="0.0dip" android:rotation="180.0" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintDimensionRatio="1080:811" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:srcCompat="@drawable/story_blackout" />
+		<TextView android:textSize="@dimen/_10sdp" android:textColor="#ffffffff" android:gravity="center" android:id="@id/download_guide_text" android:paddingTop="@dimen/_18sdp" android:paddingBottom="@dimen/_18sdp" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Lorem Ipsum - это текст-&quot;рыба&quot;, часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной &quot;рыбой&quot; для" android:shadowColor="#ff000000" android:shadowDx="0.0" android:shadowDy="0.0" android:shadowRadius="5.0" android:fontFamily="@font/ttnorms_regular" android:paddingStart="@dimen/_4sdp" android:paddingEnd="@dimen/_4sdp" app:layout_constraintBottom_toTopOf="@id/download_progressbar" app:layout_constraintEnd_toStartOf="@id/guideline47" app:layout_constraintStart_toStartOf="@id/guideline46" />
+
+		<ProgressBar
+			android:id="@id/download_progressbar"
+			style="?android:progressBarStyleHorizontal"
+			android:layout_width="535dp"
+			android:layout_height="52dp"
+			android:layout_marginBottom="25dp"
+			android:indeterminate="false"
+			android:max="100"
+			android:progress="0"
+			android:progressDrawable="@drawable/progressbar_launcher"
+			app:layout_constraintBottom_toBottomOf="@+id/download_render"
+			app:layout_constraintDimensionRatio="791:142"
+			app:layout_constraintEnd_toStartOf="@id/guideline47"
+			app:layout_constraintStart_toStartOf="@id/guideline46" />
+		<TextView android:textSize="@dimen/_12sdp" android:textColor="#ffffffff" android:gravity="center" android:id="@id/download_text" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Идёт загрузка файлов..." android:maxLines="1" android:fontFamily="@font/ttnorms_bold" android:layout_marginStart="@dimen/_12sdp" android:layout_marginEnd="@dimen/_12sdp" app:autoSizeMaxTextSize="@dimen/_12sdp" app:autoSizeMinTextSize="@dimen/_3sdp" app:autoSizeTextType="uniform" app:layout_constraintBottom_toBottomOf="@id/download_progressbar" app:layout_constraintEnd_toStartOf="@id/guideline47" app:layout_constraintStart_toStartOf="@id/guideline46" app:layout_constraintTop_toTopOf="@id/download_progressbar" />
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<ImageView
+		android:id="@id/download_logo"
+		android:layout_width="200dp"
+		android:layout_height="200dp"
+		android:layout_gravity="center"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintDimensionRatio="1080:735"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="0.04"
+		app:srcCompat="@drawable/logo_circle" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,10 +8,12 @@
 #include "../voice_new/MicroIcon.h"
 #include "../voice_new/SpeakerList.h"
 #include "game/Tasks/TaskTypes/TaskComplexEnterCarAsDriver.h"
+#include "java/jniutil.h"
 
 extern UI* pUI;
 extern CGame *pGame;
 extern CNetGame *pNetGame;
+extern CJavaWrapper *pJavaWrapper;
 //extern CVoice* pVoice;
 
 extern int iNetModeNormalOnFootSendRate;
@@ -583,17 +585,27 @@ void CLocalPlayer::ProcessSpectating()
 		}
 	}
 }
-#include "java/jniutil.h"
-extern CJavaWrapper* pJavaWrapper;
+
 bool CLocalPlayer::Spawn()
 {
 	if (!m_bHasSpawnInfo) {
 		return false;
 	}
-    pJavaWrapper->ShowHud();
+
 	// voice
 	SpeakerList::Show();
 	MicroIcon::Show();
+
+    if(pSettings && pSettings->GetReadOnly().iHud)
+    {
+        *(uint8_t*)(g_libGTASA + (VER_x32 ? 0x00819D88 + 1 : 0x009ff3A8)) = 0;
+        pJavaWrapper->ShowHud();
+    }
+    else
+    {
+        *(uint8_t*)(g_libGTASA + (VER_x32 ? 0x00819D88 + 1 : 0x009ff3A8)) = 1;
+        pJavaWrapper->HideHud();
+    }
 
 	if (m_bSpawnDialogShowed == true)
 	{

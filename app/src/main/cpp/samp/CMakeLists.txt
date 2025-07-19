@@ -11,6 +11,7 @@ endif()
 
 message(WARNING "-------------------------------------------------")
 message(WARNING "")
+message(WARNING "Author: github.com/kuzia15")
 message(WARNING "Current: libsamp.so [${ANDROID_ABI}]")
 message(WARNING "")
 message(WARNING "-------------------------------------------------")
@@ -38,6 +39,7 @@ include_directories(
         ${CMAKE_CURRENT_LIST_DIR}/vendor/
         ${CMAKE_CURRENT_LIST_DIR}/game/RW/
         ${CMAKE_CURRENT_LIST_DIR}/game/Core/
+        ${CMAKE_CURRENT_LIST_DIR}/game_sa/
 )
 
 # Opus
@@ -49,5 +51,5 @@ target_link_libraries(samp log EGL GLESv3 opus shadowhook::shadowhook ${CMAKE_CU
 
 # Set compilation flags
 #
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w -s -g -fvisibility=hidden -pthread -Wall -O3 -fexceptions")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w -s -g -fvisibility=hidden -pthread -Wall -O1 -fexceptions")
 

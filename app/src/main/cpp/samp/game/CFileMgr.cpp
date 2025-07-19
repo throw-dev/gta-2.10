@@ -1,7 +1,3 @@
-//
-// Created by x1y2z on 14.04.2023.
-//
-
 #include "CFileMgr.h"
 #include "main.h"
 #include "../vendor/armhook/patch.h"

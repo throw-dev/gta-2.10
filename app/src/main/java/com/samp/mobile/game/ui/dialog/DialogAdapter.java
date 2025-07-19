@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.joom.paranoid.Obfuscate;
 import com.samp.mobile.R;
-import com.samp.mobile.launcher.util.Util;
+import com.samp.mobile.launcher.other.Util;
 
 import java.util.ArrayList;
 @Obfuscate

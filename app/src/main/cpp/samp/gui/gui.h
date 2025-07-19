@@ -22,7 +22,7 @@
 #include "samp_widgets/chat.h"
 #include "samp_widgets/spawn.h"
 #include "samp_widgets/buttonpanel.h"
-#include "samp_widgets/playertablist.h"
+#include "samp_widgets/playerTabList.h"
 #include "samp_widgets/voicebutton.h"
 
 #include "samp_widgets/dialogs/dialog.h"
@@ -92,15 +92,14 @@ public:
 
 	virtual void touchEvent(const ImVec2& pos, TouchType type) override;
 
-    [[maybe_unused]] bool OnTouchEvent(int type, bool multi, int x, int y);
+	bool OnTouchEvent(int type, bool multi, int x, int y);
 
     void renderDebug();
 
     void DrawServerTexture();
 
     void ProcessPushedTextdraws();
-
-    [[maybe_unused]] void PushToBufferedQueueTextDrawPressed(uint16_t textdrawId);
+    void PushToBufferedQueueTextDrawPressed(uint16_t textdrawId);
 
 protected:
 	void drawList() override;

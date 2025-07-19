@@ -6,15 +6,12 @@ struct stSettings
 {
 	// client
 	char szNickName[24+1];
-	char szHost[MAX_SETTINGS_STRING+1];
-	int iPort;
+    int iServerID;
 	char szPassword[MAX_SETTINGS_STRING+1];
-    char szVersion[MAX_SETTINGS_STRING+1];
 
 	// debug
 	bool bDebug;
 	bool bOnline;
-	bool bAutoAim;
 
 	// gui
 	char szFont[40];
@@ -50,6 +47,7 @@ struct stSettings
 	bool iOutfitGuns;
 	bool iPCMoney;
 	bool iRadarRect;
+	bool iSkyBox;
 	bool iSnow;
 	bool iFirstPerson;
     bool iHud;

@@ -1,22 +1,21 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
 }
 
 android {
     signingConfigs {
         debug {
-            storeFile file("../keys/debi.jks")
-            storePassword "123123"
-            keyAlias "key0"
-            keyPassword "123123"
+            storeFile file("C:/Users/timil/key/key.jks")
+            storePassword "12348765"
+            keyAlias "tgrpKey"
+            keyPassword "12348765"
         }
         release {
-            storeFile file("../keys/debi.jks")
-            storePassword "123123"
-            keyAlias "key0"
-            keyPassword "123123"
+            storeFile file("C:/Users/timil/key/key.jks")
+            storePassword "12348765"
+            keyAlias "tgrpKey"
+            keyPassword "12348765"
         }
     }
     compileSdk 34
@@ -27,8 +26,8 @@ android {
         applicationId "com.samp.mobile"
         minSdk 26
         targetSdk 34
-        versionCode 105
-        versionName "0.8.2.1"
+        versionCode 2
+        versionName "TGRP | v1"
 
         multiDexEnabled true
 
@@ -66,15 +65,6 @@ android {
             signingConfig signingConfigs.release
         }
         release {
-            firebaseCrashlytics {
-                // Enable processing and uploading of native symbols to Firebase servers.
-                // By default, this is disabled to improve build speeds.
-                // This flag must be enabled to see properly-symbolicated native
-                // stack traces in the Crashlytics dashboard.
-                nativeSymbolUploadEnabled true
-                strippedNativeLibsDir 'build/intermediates/stripped_native_libs/release/out/lib'
-                unstrippedNativeLibsDir 'build/intermediates/merged_native_libs/release/out/lib'
-            }
             debuggable false
             jniDebuggable false
             minifyEnabled false
@@ -111,17 +101,19 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    implementation 'com.github.amitshekhariitbhu:PRDownloader:1.0.2'
+    implementation 'com.mindorks.android:prdownloader:0.6.0'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
 
-    implementation 'com.google.firebase:firebase-analytics:21.2.0'
-    implementation 'com.google.firebase:firebase-crashlytics-ndk:18.3.5'
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
     implementation 'com.google.firebase:firebase-analytics:21.2.0'
     implementation 'com.google.firebase:firebase-messaging:23.1.1'
 
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
     implementation 'org.ini4j:ini4j:0.5.4'
+    implementation 'com.github.hzy3774:AndroidP7zip:v1.7.2'
+    implementation 'com.hzy:un7zip:+'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
 
     implementation 'com.github.bumptech.glide:glide:4.13.0'
 

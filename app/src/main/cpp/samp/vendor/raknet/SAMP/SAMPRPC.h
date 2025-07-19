@@ -1,9 +1,3 @@
-// https://github.com/P3ti/RakSAMP/blob/master/raknet/SAMP/SAMPRPC.h
-
-/*
-	Updated to 0.3.7 by P3ti
-*/
-
 extern int RPC_ServerJoin;
 extern int RPC_ServerQuit;
 extern int RPC_InitGame;

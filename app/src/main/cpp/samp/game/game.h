@@ -85,7 +85,10 @@ public:
 	bool IsGameLoaded();
 	void DisableAutoAim();
 	void EnabledAutoAim();
+
 	void SetWantedLevel(uint8_t level);
+    uint8_t GetWantedLevel();
+
 	void EnableStuntBonus(bool bEnable);
 	void DisplayGameText(const char* szStr, int iTime, int iSize);
 	void AddToLocalMoney(int iAmmount);

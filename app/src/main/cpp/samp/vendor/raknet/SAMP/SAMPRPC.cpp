@@ -1,9 +1,3 @@
-// https://github.com/P3ti/RakSAMP/blob/master/raknet/SAMP/SAMPRPC.cpp
-
-/*
-	Updated to 0.3.7 by P3ti
-*/
-
 int RPC_ServerJoin = 137;
 int RPC_ServerQuit = 138;
 int RPC_InitGame = 139;

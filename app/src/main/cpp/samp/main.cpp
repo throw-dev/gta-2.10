@@ -11,6 +11,7 @@
 #include "java/jniutil.h"
 #include <dlfcn.h>
 #include "StackTrace.h"
+#include "servers.h"
 
 // voice
 #include "voice_new/Plugin.h"
@@ -25,7 +26,6 @@
 /*
 Peerapol Unarak
 */
-
 JavaVM* javaVM;
 
 char* g_pszStorage = nullptr;
@@ -60,6 +60,7 @@ void FLog(const char* fmt, ...);
 //void MyLog(const char* fmt, ...);
 
 int work = 0;
+bool serverConnect = false;
 
 void ReadSettingFile()
 {
@@ -96,13 +97,13 @@ void  RQ_Command_rqTextureMipMode_hook(int **a1)
     *a1 += 2;
     v2 = g_libGTASA;
     v3 = *(uintptr_t *)(v1 + 0x28);
-    if ( *(uintptr_t *)(g_libGTASA + (VER_x32 ? 0x0067A274 : 0x00852338) != 5 )) // 32 - 0x0067A274 // 64 - 0x00852338
+    if ( *(uintptr_t *)(g_libGTASA + (VER_x32 ? 0x0067A274 : 0x00852338) != 5 ))
     {
         glActiveTexture(0x84C5u);
-        *(uintptr_t *)(v2 + VER_x32 ? 0x0067A274 : 0x00852338) = 5; // 32 - 0x0067A274 // 64 - 0x00852338
+        *(uintptr_t *)(v2 + VER_x32 ? 0x0067A274 : 0x00852338) = 5; 
     }
     glBindTexture(0xDE1u, v3);
-    *(uintptr_t *)(g_libGTASA + (VER_x32 ? 0x1D02E8 : 0x265800)) = v3; // 32 возможно - 0x1D02E8 // 64 возможно - 0x265800
+    *(uintptr_t *)(g_libGTASA + (VER_x32 ? 0x1D02E8 : 0x265800)) = v3; 
     glTexParameteri(0xDE1u, 0x2801u, 0x2601);
     glTexParameteri(0xDE1u, 0x2800u, 0x2601);
 }*/
@@ -227,61 +228,110 @@ void handler3(int signum, siginfo_t *info, void* contextPtr)
 	return;
 }
 
-void DoInitStuff()
-{
-	if (bGameInited == false)
-	{
-		pPlayerTags = new CPlayerTags();
-		pSnapShotHelper = new CSnapShotHelper();
-		pMaterialTextGenerator = new MaterialTextGenerator();
-		pAudioStream = new CAudioStream();
-		pAudioStream->Initialize();
+void DoInitStuff() {
+    if (bGameInited == false) {
+        pPlayerTags = new CPlayerTags();
+        pSnapShotHelper = new CSnapShotHelper();
+        pMaterialTextGenerator = new MaterialTextGenerator();
+        pAudioStream = new CAudioStream();
+        pAudioStream->Initialize();
 
-		pUI->splashscreen()->setVisible(false);
-		pUI->chat()->setVisible(true);
-		pUI->buttonpanel()->setVisible(true);
+        pUI->splashscreen()->setVisible(false);
+        pUI->chat()->setVisible(true);
+        //pUI->buttonpanel()->setVisible(true);
 
-		pGame->Initialize();
-		pGame->SetMaxStats();
-		pGame->ToggleThePassingOfTime(false);
+        pGame->Initialize();
+        pGame->SetMaxStats();
+        pGame->ToggleThePassingOfTime(false);
 
-		// voice
-		/*LogVoice("[dbg:samp:load] : module loading...");
+        // voice
+        /*LogVoice("[dbg:samp:load] : module loading...");
 
-		for (const auto& loadCallback : Samp::loadCallbacks) {
-			if (loadCallback != nullptr) {
-				loadCallback();
-			}
-		}
+        for (const auto& loadCallback : Samp::loadCallbacks) {
+            if (loadCallback != nullptr) {
+                loadCallback();
+            }
+        }
 
-		Samp::loadStatus = true;*/
+        Samp::loadStatus = true;*/
 
-		LogVoice("[dbg:samp:load] : module loaded");
+        LogVoice("[dbg:samp:load] : module loaded");
 
-		if (bDebug)
-		{
-            CCamera& TheCamera = *reinterpret_cast<CCamera*>(g_libGTASA + (VER_x32 ? 0x00951FA8 : 0xBBA8D0));
+        if (bDebug) {
+            CCamera &TheCamera = *reinterpret_cast<CCamera *>(g_libGTASA +
+                                                              (VER_x32 ? 0x00951FA8 : 0xBBA8D0));
             //TheCamera.Restore();
             CCamera::SetBehindPlayer();
-			pGame->DisplayHUD(true);
-			pGame->EnableClock(false);
+            pGame->DisplayHUD(true);
+            pGame->EnableClock(false);
 
-			DoDebugStuff();
-		}
+            DoDebugStuff();
+        }
 
-		bGameInited = true;
-	}
+        bGameInited = true;
+    }
 
-	if (!bNetworkInited && !bDebug)
-	{
-		//ReadSettingFile();
+    if (!bNetworkInited && !bDebug  && !serverConnect) {
 
-		pNetGame = new CNetGame("54.38.117.79", 2517, pSettings->Get().szNickName, pSettings->Get().szPassword);
-		bNetworkInited = true;
+        int serverid = pSettings->GetReadOnly().iServerID;
+
+        if (serverid == 0)
+        {
+            pNetGame = new CNetGame(SERVER_HOST_TEST, SERVER_PORT_TEST, pSettings->Get().szNickName, pSettings->Get().szPassword);
+        }
+        else if (serverid == 1)
+        {
+            pNetGame = new CNetGame(SERVER_HOST_1, SERVER_PORT_1, pSettings->Get().szNickName, pSettings->Get().szPassword);
+        }
+        else if (serverid == 2)
+        {
+            pNetGame = new CNetGame(SERVER_HOST_2, SERVER_PORT_2, pSettings->Get().szNickName, pSettings->Get().szPassword);
+        }
+        else if (serverid == 3)
+        {
+            pNetGame = new CNetGame(SERVER_HOST_3, SERVER_PORT_3, pSettings->Get().szNickName, pSettings->Get().szPassword);
+        }
+        else if (serverid == 4)
+        {
+            pNetGame = new CNetGame(SERVER_HOST_4, SERVER_PORT_4, pSettings->Get().szNickName, pSettings->Get().szPassword);
+        }
+
+        bNetworkInited = true;
+        pUI->chat()->addDebugMessage("Connected to server... {622cf5}ID: %d", serverid);
+
 
         FLog("DoInitStuff end");
-	}
+    }
 }
+
+/*
+void GameBackground()
+{
+    CPlayerPed* pPlayerPed = pGame->FindPlayerPed();
+
+    if (pPlayerPed->IsInVehicle())
+    {
+        pPlayerPed->RemoveFromVehicleAndPutAt(1093.4, -2036.5, 82.710602);
+    }
+    else
+    {
+        pPlayerPed->m_pPed->SetPosn(-391.4141, 73.0535, 13.6677);
+    }
+
+    CCamera::SetPosition(-292.2141, 73.0535, 13.5891, 0.0, 0.0, 0.0);
+    CCamera::LookAtPoint(-291.4141, 73.0535, 13.6677, 2);
+
+    pGame->SetWorldWeather(1);
+    pGame->DisplayHUD(false);
+    pPlayerPed->TogglePlayerControllable(false);
+
+    CPlayerPed* fufy = new CPlayerPed(35, 122, -288.00f, 72.0f, 13.6965f, 80.0f);
+    pJavaWrapper->HideLoadingScreen();
+    bNetworkInited = true;
+    FLog("No env");
+    pJavaWrapper->ShowMenu();
+}
+*/
 
 extern "C" {
 	JNIEXPORT void JNICALL Java_com_samp_mobile_game_SAMP_initializeSAMP(JNIEnv *pEnv, jobject thiz)
@@ -339,6 +389,7 @@ void MainLoop()
 	if (pAudioStream) {
 		pAudioStream->Process();
 	}
+
 }
 
 void InitGui()
@@ -356,33 +407,55 @@ void InitGui()
 #include "game/multitouch.h"
 #include "armhook/patch.h"
 #include "util/CUtil.h"
+#include "obfusheader.h"
+
+
+
+void secret_function()
+{
+    WATERMARK("SECRET OF FUCKING MIMIC: I HAVE PENIS", // Message for crackers ;)
+              "hpdev daun",
+              "go touch some grass", 0);
+
+}
+
 void SetUpGLHooks();
 jint JNI_OnLoad(JavaVM* vm, void* reserved)
 {
 	javaVM = vm;
-	LOGI("SA-MP library loaded! Build time: " __DATE__ " " __TIME__);
+	LOGI(OBF("SA-MP library loaded! Build time: " __DATE__ " " __TIME__));
 
-	g_libGTASA = CUtil::FindLib("libGTASA.so");
+    WATERMARK("                   by github.com/kuzia15                   ",
+              "                   by github.com/kuzia15                   ",
+              "                   by github.com/kuzia15                   ",
+              "                   by github.com/kuzia15                   ",
+              "                   by github.com/kuzia15                   ",
+              "                   by github.com/kuzia15                   ",
+              "                   by github.com/kuzia15                   ",
+              "                   by github.com/kuzia15                   ",
+              "                                                           ", 0);
+
+	g_libGTASA = CUtil::FindLib(MAKEOBF("libGTASA.so"));
 	if (g_libGTASA == 0x00) {
-		LOGE("libGTASA.so address was not found! ");
+		LOGE(OBF("libGTASA.so address was not found! "));
 		return JNI_VERSION_1_6;
 	}
 
-	g_libSAMP = CUtil::FindLib("libsamp.so");
+	g_libSAMP = CUtil::FindLib(MAKEOBF("libsamp.so"));
 	if (g_libSAMP == 0x00) {
-		LOGE("libsamp.so address was not found! ");
+		LOGE(OBF("libsamp.so address was not found! "));
 		return JNI_VERSION_1_6;
 	}
 
 	firebase::crashlytics::Initialize();
 
-	uintptr_t libgtasa = CUtil::FindLib("libGTASA.so");
-	uintptr_t libsamp = CUtil::FindLib("libsamp.so");
-	uintptr_t libc = CUtil::FindLib("libc.so");
+	uintptr_t libgtasa = CUtil::FindLib(MAKEOBF("libGTASA.so"));
+	uintptr_t libsamp = CUtil::FindLib(MAKEOBF("libsamp.so"));
+	uintptr_t libc = CUtil::FindLib(MAKEOBF("libc.so"));
 
-	FLog("libGTASA.so: 0x%x", libgtasa);
-	FLog("libsamp.so: 0x%x", libsamp);
-	FLog("libc.so: 0x%x", libc);
+	FLog(OBF("libGTASA.so: 0x%x"), libgtasa);
+	FLog(OBF("libsamp.so: 0x%x"), libsamp);
+	FLog(OBF("libc.so: 0x%x"), libc);
 
 	char str[100];
 
@@ -434,7 +507,9 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
 	sigemptyset(&act3.sa_mask);
 	act3.sa_flags = SA_SIGINFO;
 	sigaction(SIGBUS, &act3, &act3_old);
-		
+
+    secret_function();
+
 	return JNI_VERSION_1_6;
 }
 

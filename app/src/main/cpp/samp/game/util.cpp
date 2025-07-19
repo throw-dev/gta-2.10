@@ -1860,7 +1860,6 @@ const char g_szAnimBlockNames[][40] = {
 
 #define PI 3.14159265
 
-
 CPedGTA* GamePool_FindPlayerPed()
 {
 	return *(CPedGTA**)CWorld::Players;

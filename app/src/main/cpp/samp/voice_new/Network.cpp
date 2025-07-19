@@ -269,8 +269,6 @@ void Network::OnRaknetConnect(const char *ip, const uint32_t port) noexcept
     Network::connectionStatus = ConnectionStatus::RNConnecting;
 
     FLog("[dbg:raknet:client:connect] : connected");
-
-
 }
 
 bool Network::OnRaknetRpc(const int id, RakNet::BitStream& parameters) noexcept

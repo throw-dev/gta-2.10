@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.android.material.button.MaterialButton;
 import com.joom.paranoid.Obfuscate;
 import com.samp.mobile.R;
-import com.samp.mobile.launcher.util.Util;
+import com.samp.mobile.launcher.other.Util;
 @Obfuscate
 public class AttachEdit {
     private final int POSITION_Y = 0;
