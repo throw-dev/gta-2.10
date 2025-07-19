@@ -5,5 +5,5 @@ pluginManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Throw Mobile"
+rootProject.name = "SAMP-2.10"
 include ':app'
