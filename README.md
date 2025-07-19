@@ -9,6 +9,7 @@
 # ᐳ Features \ Features
 > * Support `arm64` and `arm32`
 > * Built-in OpenGL reflections (cars)
+> * WaterShader
 > * custom SkyBox
 > * Disabled `CCorona` (optimization) 
 > * Added mini-map icons 
