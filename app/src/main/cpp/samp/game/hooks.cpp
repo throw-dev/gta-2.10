@@ -1819,8 +1819,6 @@ void SetUpGLHooks();
 
 int(*mpg123_param)(void* mh, int key, long val, int ZERO, double fval);
 
-void InitialiseSkyBox();
-
 int mpg123_param_hook(void* mh, int key, long val, int ZERO, double fval)
 {
     // 0x2000 = MPG123_SKIP_ID3V2
@@ -1986,7 +1984,7 @@ void InstallSpecialHooks()
 
     CHook::RET("_ZN4CPed31RemoveWeaponWhenEnteringVehicleEi"); // CPed::RemoveWeaponWhenEnteringVehicle
 
-    CHook::InstallPLT(g_libGTASA + (VER_x32 ? 0x6701D4 : 0x840708), &RLEDecompress_hook, &RLEDecompress);
+//    CHook::InstallPLT(g_libGTASA + (VER_x32 ? 0x6701D4 : 0x840708), &RLEDecompress_hook, &RLEDecompress); // Maybe comment fix bug with widgets, because hook was written by ChatGPT (not mine code)
 
     CHook::InlineHook("_Z11OS_FileReadPvS_i", &OS_FileRead_hook, &OS_FileRead);
 
@@ -2098,8 +2096,6 @@ void InstallHooks()
     CHook::Write(g_libGTASA + 0x339404, 0x52846C02);
 #endif*/
 
-
-    //InitialiseSkyBox();
 
     //m_pSkyObject = CreateObjectScaled(18659, 2.92f);
     //SetTexturkaka("daily_sky_1");
