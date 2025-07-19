@@ -20,4 +20,5 @@
 > - **x1y2z** — Author 
 > - [**kuzia15**](https://github.com/kuzia15) — OpenGL, small improvements
 
-![screenshot](https://i.imgur.com/3ME7V6V.jpeg)
+<img width="1280" height="559" alt="image" src="https://github.com/user-attachments/assets/e1a75e9f-528e-4534-9138-3b44fe405c03" />
+
