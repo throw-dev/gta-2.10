@@ -9,7 +9,6 @@ import com.samp.mobile.game.ui.AttachEdit;
 import com.samp.mobile.game.ui.CustomKeyboard;
 import com.samp.mobile.game.ui.LoadingScreen;
 import com.samp.mobile.game.ui.dialog.DialogManager;
-import com.samp.mobile.launcher.activity.MainActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -26,7 +25,6 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
 
     private AttachEdit mAttachEdit;
     private LoadingScreen mLoadingScreen;
-    private MainActivity mMainActivity;
 
     public native void sendDialogResponse(int i, int i2, int i3, byte[] str);
 
@@ -179,7 +177,6 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
 
         mLoadingScreen = new LoadingScreen(this);
 
-        mMainActivity = new MainActivity();
 
         instance = this;
 

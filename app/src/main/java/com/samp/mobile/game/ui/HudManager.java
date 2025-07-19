@@ -1,6 +1,7 @@
 package com.samp.mobile.game.ui;
 
 import android.app.Activity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,9 +34,7 @@ public class HudManager {
 
         textHP = aactivity.findViewById(R.id.healthtext);
         textArmour = aactivity.findViewById(R.id.armour_text);
-        textPlID = aactivity.findViewById(R.id.textPlayerID);
-
-
+        //textPlID = aactivity.findViewById(R.id.textPlayerID);
 
         hud_money = aactivity.findViewById(R.id.money_text);
         hud_weapon = aactivity.findViewById(R.id.weapon_ammo_image);

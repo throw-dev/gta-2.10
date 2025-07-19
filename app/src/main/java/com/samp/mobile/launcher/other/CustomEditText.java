@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.widget.EditText;
 
-import com.nvidia.devtech.NvEventQueueActivity;
 import com.samp.mobile.game.SAMP;
 
 @SuppressLint("AppCompatCustomView")

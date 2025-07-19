@@ -22,8 +22,6 @@ public class LoadingScreen {
     {
         this.activity = activity;
 
-        percentText = activity.findViewById(R.id.loading_percent);
-
         mainLayout = (ConstraintLayout) activity.getLayoutInflater().inflate(R.layout.loadingscreen, null);
         activity.addContentView(mainLayout, new ConstraintLayout.LayoutParams(-1, -1));
     }

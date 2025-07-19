@@ -5,10 +5,5 @@ pluginManagement {
         mavenCentral()
     }
 }
-<<<<<<< HEAD
-rootProject.name = "GTA SAMP 32x64 2.10"
-include ':app'
-=======
 rootProject.name = "SAMP-2.10"
 include ':app'
->>>>>>> 9f1c9a8085d1021d124729a64ac25e6f040bf84c

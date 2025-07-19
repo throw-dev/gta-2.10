@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.joom.paranoid.Obfuscate;
-import com.nvidia.devtech.NvEventQueueActivity;
 import com.samp.mobile.R;
 import com.samp.mobile.launcher.other.CustomRecyclerView;
 import com.samp.mobile.launcher.other.Util;

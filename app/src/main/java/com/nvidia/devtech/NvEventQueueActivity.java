@@ -58,7 +58,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.joom.paranoid.Obfuscate;
 import com.samp.mobile.R;
 import com.samp.mobile.game.ui.HudManager;
-import com.samp.mobile.launcher.fragment.MainFragment;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -125,7 +124,6 @@ public abstract class NvEventQueueActivity extends AppCompatActivity implements 
 
     private SurfaceView mSurfaceView = null;
 
-    public MainFragment mainFragment;
 
     private HudManager mHudManager = null;
 
@@ -212,13 +210,12 @@ public abstract class NvEventQueueActivity extends AppCompatActivity implements 
 
     public native void togglePlayer(int toggle);
 
-    public native void SetRadarBgPos(float x1, float y1, float x2, float y2);
-    public native void SetRadarPos(float x1, float y1, float size);
-    public native void SetRadarEnabled(boolean tf);
+    public native void Penis();
 
     public native void onEventBackPressed();
 
     public native void clickSpeedometr(int buttonid);
+
 
     /**
      * Helper class used to pass raw data around.
@@ -392,6 +389,7 @@ public abstract class NvEventQueueActivity extends AppCompatActivity implements 
     public native void quitAndWait();
     public native void postCleanup();
     public native void imeClosed();
+
     public native void lowMemoryEvent(); // TODO: implement this
     public native boolean processTouchpadAsPointer(ViewParent viewParent, boolean z);
     public native void notifyChange(String str, int i);
@@ -433,7 +431,6 @@ public abstract class NvEventQueueActivity extends AppCompatActivity implements 
         System.out.println("**** onCreate");
         super.onCreate(savedInstanceState);
 
-        mainFragment = new MainFragment();
 
 		if(supportPauseResume)
 		{

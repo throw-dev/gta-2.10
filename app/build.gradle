@@ -6,13 +6,13 @@ plugins {
 android {
     signingConfigs {
         debug {
-            storeFile file("C:/Users/timil/key/key.jks")
+            storeFile file("../app/src/main/key.jks")
             storePassword "12348765"
             keyAlias "tgrpKey"
             keyPassword "12348765"
         }
         release {
-            storeFile file("C:/Users/timil/key/key.jks")
+            storeFile file("../app/src/main/key.jks")
             storePassword "12348765"
             keyAlias "tgrpKey"
             keyPassword "12348765"
@@ -27,7 +27,7 @@ android {
         minSdk 26
         targetSdk 34
         versionCode 2
-        versionName "TGRP | v1"
+        versionName "SA"
 
         multiDexEnabled true
 
