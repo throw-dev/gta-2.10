@@ -1,5 +1,5 @@
 //
-// Created by vadim on 25.03.2025.
+// Created by vadim (kuzia) on 25.03.2025.
 //
 
 #pragma once

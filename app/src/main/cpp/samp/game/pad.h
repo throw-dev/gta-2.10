@@ -1,5 +1,4 @@
 #pragma once
-
 enum ePadKeys
 {
 	// KEY_ 						OnFoot 				InCar

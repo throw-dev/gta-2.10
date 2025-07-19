@@ -41,6 +41,7 @@ bool kuziaclose = false;
 uint8_t byteInternalPlayer = 0;
 CPedGTA* dwCurPlayerActor = 0;
 uint8_t byteCurPlayer = 0;
+uint8_t byteCurDriver = 0;
 
 extern "C" uintptr_t get_lib()
 {
@@ -1904,6 +1905,7 @@ void InjectHooks()
 
 void InstallUrezHooks()
 {
+// pvr
     CHook::UnFuck(g_libGTASA + (VER_x32 ? 0x1E87A0 : 0x714003 ));
     *(char*)(g_libGTASA + (VER_x32 ? 0x1E87A0 : 0x714003 ) + 12) = 'd';
     *(char*)(g_libGTASA + (VER_x32 ? 0x1E87A0 : 0x714003 ) + 13) = 'x';
@@ -1913,6 +1915,25 @@ void InstallUrezHooks()
     *(char*)(g_libGTASA + (VER_x32 ? 0x1E8C04 : 0x71406F) + 12) = 'd';
     *(char*)(g_libGTASA + (VER_x32 ? 0x1E8C04 : 0x71406F) + 13) = 'x';
     *(char*)(g_libGTASA + (VER_x32 ? 0x1E8C04 : 0x71406F) + 14) = 't';
+
+// etc
+
+    CHook::UnFuck(g_libGTASA + (VER_x32 ? 0x1E878C : 0x714017 ));
+    *(char*)(g_libGTASA + (VER_x32 ? 0x1E878C : 0x714017 ) + 12) = 'd';
+    *(char*)(g_libGTASA + (VER_x32 ? 0x1E878C : 0x714017 ) + 13) = 'x';
+    *(char*)(g_libGTASA + (VER_x32 ? 0x1E878C : 0x714017 ) + 14) = 't';
+
+    CHook::UnFuck(g_libGTASA + (VER_x32 ? 0x1E8BF4 : 0x71407F));
+    *(char*)(g_libGTASA + (VER_x32 ? 0x1E8BF4 : 0x71407F) + 12) = 'd';
+    *(char*)(g_libGTASA + (VER_x32 ? 0x1E8BF4 : 0x71407F) + 13) = 'x';
+    *(char*)(g_libGTASA + (VER_x32 ? 0x1E8BF4 : 0x71407F) + 14) = 't';
+
+// unc
+
+    CHook::UnFuck(g_libGTASA + (VER_x32 ? 0x1E87F0 : 0x713FB3 ));
+    *(char*)(g_libGTASA + (VER_x32 ? 0x1E87F0 : 0x713FB3 ) + 12) = 'd';
+    *(char*)(g_libGTASA + (VER_x32 ? 0x1E87F0 : 0x713FB3 ) + 13) = 'x';
+    *(char*)(g_libGTASA + (VER_x32 ? 0x1E87F0 : 0x713FB3 ) + 14) = 't';
 }
 
 
@@ -1921,150 +1942,35 @@ void InstallUrezHooks()
 
 #include "hooks.h"
 
-
-/*void CHooks::InitialiseSkyBox()
+//WaterShader
+#include "..//game/WaterShader.h"
+uintptr_t* g_WaterShaderClass = nullptr;
+void (*emu_glEndInternal)();
+void emu_glEndInternal_hook()
 {
-    void* handle = dlopen("libGTASA.so", RTLD_LAZY);
-    auto* dwModelArray = (uintptr_t*)(dlsym(handle, "_ZN10CModelInfo16ms_modelInfoPtrsE"));
-    if (!dwModelArray[18659])
-        return;
-
-    m_pSkyObject = CreateObjectScaled(18659, 2.92f);
-
-    SetTexturkaka("daily_sky_1");
-}*/
-
-/*int CHooks::InitialiseSkyBox()
-{
-int result; // r0
-    void* handle = dlopen("libGTASA.so", RTLD_LAZY);
-    auto* dwModelArray = (uintptr_t*)(dlsym(handle, "_ZN10CModelInfo16ms_modelInfoPtrsE"));
-if ( !dwModelArray[18659] )
-//Log("Error CSkyBox::Init. No mode %d", 0x43D4);
-    m_pSkyObject = CreateObjectScaled(18659, 2.92f);
-    SetTexturkaka("daily_sky_1");
-}*/
-
-
-
-/*void RwMatrixScale(RwMatrix* matrix, CVector* vecScale)
-{
-    CVector vector = vecScale;
-
-    RwMatrixScale(matrix, &vector);
-}
-
-CObject* CreateObjectScaled(int iModel, CVector vecPos, CVector* vecRot, float fScale)
-{
-    //auto *vecRot = new CVector();
-    auto *vecScale = new CVector(fScale);
-
-    //auto
-
-    //vecPos = {0.0f, 0.0f, 0.0f};
-
-    if (!pNetGame)
-        return nullptr;
-
-    if(!pNetGame->GetObjectPool())
-        return nullptr;
-
-    auto *object = pGame->NewObject(iModel, vecPos, vecRot, fScale + 10.7f);
-
-    *(uint32_t*)((uintptr_t)object->m_pEntity + 28) &= 0xFFFFFFFE;
-    *(uint8_t*)((uintptr_t)object->m_pEntity + 29) |= 1;
-
-    object->RemovePhysical();
-
-    RwMatrix matrix;
-    object->thiz->GetMatrix(&matrix);
-
-    RwMatrixScale(&matrix, vecScale);
-
-    object->thiz->SetMatrix(matrix);
-    object->UpdateRwMatrixAndFrame();
-
-    *(uint8_t*)((uintptr_t)object->m_pEntity + 29) |= 1;
-    object->AddPhysical();
-
-    return object;
-}
-
-uintptr_t RwFrameForAllObjectsCallback(uintptr_t object, CObject* pObject)
-{
-    if (*(uint8_t*)object != 1)
-        return object;
-
-    uintptr_t pAtomic = object;
-    RpGeometry* pGeom = *(RpGeometry * *)(pAtomic + 24);
-    if (!pGeom)
-        return object;
-
-    int numMats = pGeom->matList.numMaterials;
-    if (numMats > 16)
-        numMats = 16;
-
-    for (int i = 0; i < numMats; i++)
+    if ( ((*(uintptr_t *)(g_libGTASA + (VER_x32 ? 0x006B7094 : 0x8944A8))) & 0x80000) != 0 )
     {
-        RpMaterial* pMaterial = pGeom->matList.materials[i];
-        if (!pMaterial)
-            continue;
+        if ( g_WaterShaderClass == nullptr )
+        {
+            g_WaterShaderClass = (uintptr_t*) malloc(64);
+            memset(g_WaterShaderClass, 1, 64);
+            WaterShader::BuildShadersSource1(g_WaterShaderClass);
+        }else{
+        }
+        if(g_WaterShaderClass){
+            WaterShader::EmuShader__Select3(g_WaterShaderClass);
+        }else{
+        }
 
-        if (pSkyTexture)
-            pMaterial->texture = pSkyTexture;
     }
-
-    return object;
+    emu_glEndInternal();
 }
-
-uint8_t pChangeTime;
-void ReTextureSky()
-{
-    int iHours = pNetGame->m_pNetSet->byteHoldTime;
-
-    if (pChangeTime != iHours)
-    {
-        pChangeTime = iHours;
-
-        if (iHours >= 0 && iHours <= 5)
-            SetTexturkaka("night_sky_1");
-
-        if (iHours >= 6 && iHours <= 10)
-            SetTexturkaka("afternoon_sky_1");
-
-        if (iHours >= 11 && iHours <= 18)
-            SetTexturkaka("daily_sky_1");
-
-        if (iHours >= 19 && iHours <= 24)
-            SetTexturkaka("evening_sky_1");
-    }
-
-    uintptr_t pAtomic = m_pSkyObject->m_RwObject;
-    if (!pAtomic)
-        return;
-
-    if (!*(uintptr_t*)(pAtomic + 4))
-        return;
-
-//                DeActivateDirectional
-    ((void(*)())(g_libGTASA + (VER_x32 ? 0x5D1F98:0x6E5A30) + 1))(); // 32 - 0x5D1F98 // 64 - 0x6E5A30
-
-//                SetFullAmbient
-    ((void*(*)())(g_libGTASA + (VER_x32 ? 0x5D204C:0x6F6720) + 1))(); // 32 - 0x5D204C // 64 - 0x6F6720
-
-//                SetAmbientColours
-    ((void(*)())(g_libGTASA + (VER_x32 ? 0x5d2069:0x006f6738) + 1))(); // 32 - 0x5d2069 // 64 - 0x006f6738
-
-//                RwFrameForAllObjects
-    ((uintptr_t(*)(uintptr_t, uintptr_t, CObject*))(g_libGTASA + (VER_x32 ? 0x1D8858:0x2703BC) + 1))(*(uintptr_t*)(pAtomic + 4), (uintptr_t)RwFrameForAllObjectsCallback, m_pSkyObject); // 32 - 0x1D8858 // 64 - 0x2703BC
-}*/
-
 
 void InstallSpecialHooks()
 {
     InjectHooks();
 
-    InstallUrezHooks();
+    //InstallUrezHooks(); //If u use CRMP cache, u need to use this
 
     CHook::Redirect("_ZN5CGame20InitialiseRenderWareEv", &CGame::InitialiseRenderWare);
     CHook::InstallPLT(g_libGTASA + (VER_x32 ? 0x6785FC : 0x84EC20), &StartGameScreen__OnNewGameCheck_hook, &StartGameScreen__OnNewGameCheck);
@@ -2151,6 +2057,8 @@ void InstallHooks()
             CHook::Redirect("_Z25RQ_Command_rqSetAlphaTestRPc", &RQCommand_rqSetAlphaTest);
         }
     }
+
+    CHook::InlineHook("_Z17emu_glEndInternalv", (uintptr_t)emu_glEndInternal_hook, (uintptr_t*)&emu_glEndInternal); // WaterShader
 
     CHook::Redirect("_ZN4CHID12GetInputTypeEv", &GetInputType);
 
