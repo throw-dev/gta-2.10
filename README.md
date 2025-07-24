@@ -25,5 +25,3 @@
 <img width="1650" height="720" alt="image" src="https://github.com/user-attachments/assets/20197d82-3046-44e2-a2ad-eea36ea756a5" />
 <img width="1650" height="720" alt="image" src="https://github.com/user-attachments/assets/dc99126c-32a7-46c8-8233-474d737ade4c" />
 <img width="1650" height="720" alt="image" src="https://github.com/user-attachments/assets/e289bf60-023f-4f5f-a76a-8210f3311ca0" />
-
-
