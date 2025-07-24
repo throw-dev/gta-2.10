@@ -11,14 +11,14 @@
 > * Built-in OpenGL reflections (cars)
 > * WaterShader
 > * custom SkyBox
-> * Disabled `CCorona` (optimization) 
+> * disabled `CCorona` (optimization) 
 > * Added mini-map icons 
 > * Improved multi-touch 
 > * Support for the kick button 
 > * Compatibility with SA:MP 0.3.7
 
 # ᐳ Credit's
-> - **x1y2z** — Author 
+> - **x1y2z** — author 
 > - [**kuzia15**](https://github.com/kuzia15) — OpenGL, small improvements
 > - [**psychobye**](https://github.com/psychobye) — CSkyBox, small improvements
 
