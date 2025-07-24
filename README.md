@@ -20,6 +20,7 @@
 # ᐳ Credit's
 > - **x1y2z** — Author 
 > - [**kuzia15**](https://github.com/kuzia15) — OpenGL, small improvements
+> - [**psychobye**](https://github.com/psychobye) — CSkyBox, small improvements
 
 <img width="1650" height="720" alt="image" src="https://github.com/user-attachments/assets/20197d82-3046-44e2-a2ad-eea36ea756a5" />
 <img width="1650" height="720" alt="image" src="https://github.com/user-attachments/assets/dc99126c-32a7-46c8-8233-474d737ade4c" />
